@@ -124,3 +124,43 @@ You do not need to worry about .error {} colliding with any other `.css` or
 .link a:hover {
     color: #7e4bde;
 }
+
+.login {
+    font-size: 20px;
+    font-weight: 700;
+    color: #fff;
+    padding: 14px 16px;
+    line-height: 30px;
+    background-color: #885bde;
+    border-radius: 10px;
+    width: 100%;
+}
+
+.login:hover {
+    background-color: #7e4bde;
+}
+
+.buttons {
+    margin-top: 16px;
+    margin-inline:auto;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.logout {
+    font-size: 20px;
+    font-weight: 700;
+    color: #885bde;
+    padding: 14px 16px;
+    line-height: 30px;
+    background-color: #fff;
+    border-radius: 10px;
+    width: 100%;
+    border: 2px dashed  #885bde
+}
+.logout:hover {
+    background-color: #885bde;
+    color: #fff;
+
+}
