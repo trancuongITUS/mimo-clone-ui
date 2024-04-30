@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-html-link-for-pages */
 import styles from './index.module.css';
 import "../../app/globals.css";
 
