@@ -1,4 +1,6 @@
 import Image from "next/image";
+import Link from "next/link";
+
 import "../../app/globals.css";
 import styles from './index.module.css'
 import resetPasswordImageSrc from './images/reset-password.webp'
@@ -20,7 +22,7 @@ export default function About() {
 
             </div>
             <div className={styles.link}>
-                <a style={{ color: "#8d60e2" }} href="/login" >Back to Login</a>
+                <Link style={{ color: "#8d60e2" }} href="/login" >Back to Login</Link>
             </div>
             <div className={styles.link}>
                 If you're still having trouble, reach out at
