@@ -11,11 +11,9 @@ import ProtectedRouter from "@/components/ProtectedRouter";
 
 import { handleLogout } from "../lib/auth";
 import { useCurrentUser, useProtectedRoute } from "../lib/hooks";
-import {
-  fetchDescriptionFromDatabase,
-  updateUserDescription,
-} from "../lib/userInfo";
+import { fetchUserInfo, updateUserInfo } from "../lib/userInfo";
 import styles from "./index.module.css";
+import { UserInfo } from "@/utils/types/user";
 
 const Settings = () => {
   useProtectedRoute();
@@ -26,12 +24,14 @@ const Settings = () => {
     user?.displayName
   );
   const [description, setDescription] = useState<string | null>(null);
+  const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
 
   useEffect(() => {
     const fetchDescription = async () => {
       if (user) {
-        const data = await fetchDescriptionFromDatabase(user.uid);
-        setDescription(data);
+        const data = await fetchUserInfo(user.uid);
+        setUserInfo(data);
+        setDescription(data.description);
       }
     };
     if (description === null) fetchDescription();
@@ -43,8 +43,12 @@ const Settings = () => {
 
   const handleUpdateData = async () => {
     try {
+      if (!userInfo) return;
       updateProfile(user as User, { displayName: userName });
-      updateUserDescription(user?.uid as string, description || "");
+      updateUserInfo(user?.uid as string, {
+        ...userInfo,
+        description: description || "",
+      });
       toast.success("Update user data successfully !!");
     } catch (err) {
       console.error("🚀 ~ handleUpdateData ~ err:", err);
@@ -102,7 +106,7 @@ const Settings = () => {
           <button
             className={`${styles.button} ${styles.login}`}
             onClick={handleUpdateData}
-            disabled={user === null}
+            disabled={!userInfo}
           >
             Save
           </button>
