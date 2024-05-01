@@ -1,12 +1,13 @@
+import { UserInfo } from "@/utils/types/user";
 import { get, getDatabase, ref, set } from "firebase/database";
 
 const db = getDatabase();
 
-export const updateUserDescription = (userId: string, description: string) => {
-  set(ref(db, `users/${userId}/description`), description);
+export const updateUserInfo = (userId: string, userInfo: UserInfo) => {
+  set(ref(db, `users/${userId}`), userInfo);
 };
 
-export const fetchDescriptionFromDatabase = async (userId: string) => {
-  const snapshot = await get(ref(db, `users/${userId}/description`));
+export const fetchUserInfo = async (userId: string) => {
+  const snapshot = await get(ref(db, `users/${userId}`));
   return snapshot.val();
 };
