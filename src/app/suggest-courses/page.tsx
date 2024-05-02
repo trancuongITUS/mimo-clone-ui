@@ -5,13 +5,16 @@ import data_suggest_courses from "./data";
 import styles from "./index.module.css";
 import { Button } from "@nextui-org/button";
 import { Input } from "@nextui-org/input";
+import { useRouter } from "next/navigation";
 export default function SuggestCodePage() {
   const [current_question, setCurrentQuestion] = useState(0);
   const [name, setName] = useState("");
   const [courses, setCourses] = useState("");
+  const router = useRouter();
   // const config = useAppConfig();
 
   const handleSuggestCourse = async () => {
+    router.push("/user-page");
     // const userInfo = userInfoService.getUserInfo();
     // const userDoc = doc(db,'users',userInfo.uid);
     // const courseInfo = await getCoursesOverview(config);
