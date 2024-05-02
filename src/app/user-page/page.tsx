@@ -327,7 +327,7 @@ export function UserPage(props: userPageProps) {
               </a>
               <div className={styles["user-page-menu"]}>
                 <a
-                  href="/web"
+                  href="/"
                   className={
                     styles["user-page-menu-item"] + " " + styles["active"]
                   }
