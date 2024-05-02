@@ -1,7 +1,7 @@
 "use client";
 
 import { handleGoogleLogin } from "@/pages/lib/auth";
-import styles from "@/pages/login/index.module.css";
+import styles from "@/app/login/index.module.css";
 import { useRouter } from "next/navigation";
 
 export function GoogleLoginButton() {
@@ -11,7 +11,7 @@ export function GoogleLoginButton() {
       className={styles["btn-other"]}
       onClick={async () => {
         const user = await handleGoogleLogin();
-        router.push("/user-page");
+        router.push("/suggest-courses");
       }}
     >
       <svg
@@ -39,7 +39,7 @@ export function GoogleLoginButton() {
           fill="#EB4335"
         ></path>
       </svg>
-      <p>Google</p>
+      <p className="text-black">Google</p>
     </div>
   );
 }
@@ -60,7 +60,7 @@ export function AppleLoginButton() {
           fill="currentColor"
         ></path>
       </svg>
-      <p>Apple</p>
+      <p className="text-black">Apple</p>
     </div>
   );
 }
@@ -83,7 +83,7 @@ export function FacebookLoginButton() {
           fill="#4267B2"
         ></path>
       </svg>
-      <p>Facebook</p>
+      <p className="text-black">Facebook</p>
     </div>
   );
 }
