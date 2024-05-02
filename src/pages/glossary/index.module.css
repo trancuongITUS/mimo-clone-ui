@@ -1,0 +1,118 @@
+/*
+You do not need to worry about .error {} colliding with any other `.css` or
+`.module.css` files!
+*/
+.page {
+    background-color: white;
+    align-items: center;
+    color: rgb(39, 38, 68);
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.header {
+    color: #fff;
+    justify-content: center;
+    display: flex;
+    left: 0px;
+    box-sizing: border-box;
+    z-index: 3;
+    width: 100%;
+    height: 93px;
+    font-size: 15px;
+    font-weight: 500;
+    box-shadow: none;
+}
+
+.select {
+    color:#7e4bde;
+    padding: 15px;
+    padding-left: 18px;
+    padding-right: 18px;
+    color:#885bde;
+}
+.input {
+    outline: none;
+    border-radius: 10px;
+    background-color: #3f4273;
+    margin-bottom: 26px;
+    width: 100%;
+    height: 48px;
+    border: 1px solid #3f4273;
+}
+
+.input:hover,
+.input:focus {
+    border-color: #7e4bde;
+}
+
+.login {
+    font-size: 20px;
+    font-weight: 700;
+    color: #fff;
+    padding: 14px 16px;
+    line-height: 30px;
+    background-color: #885bde;
+    border-radius: 10px;
+    width: 100%;
+}
+
+.login:hover {
+    background-color: #7e4bde;
+}
+
+.other-login {
+    display: flex;
+    align-items: center;
+    padding: 20px 0;
+    width: 100%;
+}
+
+.btn-other {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 56px;
+    background-color: #fff;
+    color: #000;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 14px;
+    width: 31%;
+    cursor: pointer;
+}
+
+.btn-other:hover {
+    background-color: #f1f1f1;
+}
+
+.btn-other p {
+    margin-left: 10px;
+}
+
+.link {
+    display: flex;
+    color: #fff;
+    font-size: 16px;
+    padding: 8px 0;
+}
+
+.buttonSignUp {
+    border-color: rgb(128 92 214);
+    border-radius: 25px;
+    border-width: 2px;
+    padding: 15px;
+    padding-left: 30px;
+    padding-right: 30px;
+    color: #885bde;
+    font-weight: 700px;
+}
+.buttonSignUp:hover {
+    background-color: rgb(128 92 214);
+    color: white;
+}

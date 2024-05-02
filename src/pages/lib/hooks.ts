@@ -1,4 +1,4 @@
-import { auth } from "@/app/firebase/config";
+import { auth } from "@/pages/firebase/config";
 import { User, onAuthStateChanged } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";

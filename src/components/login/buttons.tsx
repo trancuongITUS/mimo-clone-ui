@@ -1,7 +1,7 @@
 "use client";
 
-import { handleGoogleLogin } from "@/app/lib/auth";
-import styles from "@/app/login/styles.module.css";
+import { handleGoogleLogin } from "@/pages/lib/auth";
+import styles from "@/pages/login/index.module.css";
 import { useRouter } from "next/navigation";
 
 export function GoogleLoginButton() {

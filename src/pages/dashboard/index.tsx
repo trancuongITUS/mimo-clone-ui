@@ -1,5 +1,5 @@
 "use client";
-import { handleLogout } from "@/app/lib/auth";
+import { handleLogout } from "@/pages/lib/auth";
 import { useRouter } from "next/navigation";
 import { useCurrentUser, useProtectedRoute } from "../lib/hooks";
 

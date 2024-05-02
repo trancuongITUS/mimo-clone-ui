@@ -1,0 +1,233 @@
+/*
+ * Replace this with your own classes
+ *
+ * e.g.
+ * .container {
+ * }
+*/
+.suggest-courses {
+  display: flex;
+  flex-direction: column;
+  height: var(--vh);
+  background: #252746;
+}
+
+.suggest-courses-question-div {
+  margin: 0px 12px;
+  display: flex;
+  justify-content: center;
+  flex-grow: 2;
+}
+
+.boder-status {
+  background-color: green;
+  border-radius: 15px;
+}
+.box-chat {
+  background: rgb(64, 66, 112);
+  color: #fff;
+  font-family:
+    var(--font-aeonik),
+    var(--font-aeonik),
+    -apple-system,
+    BlinkMacSystemFont,
+    Segoe UI,
+    Roboto,
+    Oxygen,
+    Ubuntu,
+    Cantarell,
+    Fira Sans,
+    Droid Sans,
+    Helvetica Neue,
+    sans-serif;
+  border: 0 solid #e5e7eb;
+  border-radius: 10px;
+  padding: 2%;
+}
+
+.box-chat-button {
+  background: #252746;
+  color: #fff;
+  font-family:
+    var(--font-aeonik),
+    var(--font-aeonik),
+    -apple-system,
+    BlinkMacSystemFont,
+    Segoe UI,
+    Roboto,
+    Oxygen,
+    Ubuntu,
+    Cantarell,
+    Fira Sans,
+    Droid Sans,
+    Helvetica Neue,
+    sans-serif;
+  border-style: solid;
+  border-color: rgb(61, 63, 107);
+  border-radius: 10px;
+  padding: 1%;
+  position: fixed;
+  right: 250px;
+  user-select: none;
+  cursor: pointer;
+}
+.box-chat-button.not-allow {
+  cursor: not-allowed;
+}
+.box-chat-button-select {
+  background: #252746;
+  color: #fff;
+  font-family:
+    var(--font-aeonik),
+    var(--font-aeonik),
+    -apple-system,
+    BlinkMacSystemFont,
+    Segoe UI,
+    Roboto,
+    Oxygen,
+    Ubuntu,
+    Cantarell,
+    Fira Sans,
+    Droid Sans,
+    Helvetica Neue,
+    sans-serif;
+  border-style: solid;
+  border-color: rgb(61, 63, 107);
+  border-radius: 10px;
+  padding: 2%;
+  user-select: none;
+  cursor: pointer;
+}
+
+.fill-in {
+  background-color: #252746;
+  font-family:
+    var(--font-aeonik),
+    var(--font-aeonik),
+    -apple-system,
+    BlinkMacSystemFont,
+    Segoe UI,
+    Roboto,
+    Oxygen,
+    Ubuntu,
+    Cantarell,
+    Fira Sans,
+    Droid Sans,
+    Helvetica Neue,
+    sans-serif;
+  color: rgb(157, 162, 173);
+  border: none;
+  position: fixed;
+  right: 360px;
+}
+
+.position-right {
+  text-align: right;
+}
+
+.grid-status {
+  display: grid;
+  grid-template-columns: auto auto auto auto auto auto auto auto auto;
+  position: absolute;
+  top: 50px;
+  white-space: pre;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  grid-gap: 10px;
+  padding: 10px;
+}
+
+.item2 {
+  text-align: left;
+}
+.item3 {
+  text-align: right;
+}
+.item4 {
+  position: absolute;
+  text-align: center;
+  right: 250px;
+}
+
+.grid-container > div {
+  padding: 10px 20%;
+  font-size: 30px;
+}
+
+.items-center {
+  align-items: center;
+}
+.flex {
+  display: flex;
+}
+.flex-col {
+  flex-direction: column;
+}
+.flex-row {
+  flex-direction: row;
+}
+.overflow-y-auto {
+  overflow-y: auto;
+}
+.h-full {
+  display: 100%;
+}
+
+.font-text {
+  font-family:
+    var(--font-aeonik),
+    var(--font-aeonik),
+    -apple-system,
+    BlinkMacSystemFont,
+    Segoe UI,
+    Roboto,
+    Oxygen,
+    Ubuntu,
+    Cantarell,
+    Fira Sans,
+    Droid Sans,
+    Helvetica Neue,
+    sans-serif;
+}
+.process-bar {
+  width: 500px;
+  position: relative;
+  background-color: rgb(75, 77, 133);
+  border-radius: 10px;
+  border-style: solid;
+  border-color: rgb(141, 96, 226);
+  padding: 10px;
+}
+.process-track {
+  position: absolute;
+  width: 0px;
+  height: 100%;
+  top: 0;
+  left: 0;
+  transition: width 0.3s ease;
+  background-color: rgb(141, 96, 226);
+  border-radius: 6px;
+}
+.image-div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.image-style {
+  width: 100%;
+  height: auto;
+}
+.question-content {
+  height: 0px;
+  overflow: hidden;
+  opacity: 0;
+  visibility: hidden;
+}
+.question-content.current-open {
+  opacity: 1;
+  visibility: visible;
+  height: fit-content;
+}

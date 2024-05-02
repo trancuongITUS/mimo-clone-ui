@@ -1,7 +1,7 @@
 "use client";
 
-import { handleGoogleLogin } from "@/app/lib/auth";
-import styles from "@/app/register/styles.module.css";
+import { handleGoogleLogin } from "@/pages/lib/auth";
+import styles from "@/pages/register/index.module.css";
 
 export function GoogleSignUpButton() {
 	return (

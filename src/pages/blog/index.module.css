@@ -3,11 +3,9 @@ You do not need to worry about .error {} colliding with any other `.css` or
 `.module.css` files!
 */
 .page {
-    min-height: 100vh;
-    background-color: #252746;
-    display: flex;
-    justify-content: center;
+    background-color: white;
     align-items: center;
+    color: rgb(39, 38, 68);
 }
 
 .content {
@@ -15,27 +13,31 @@ You do not need to worry about .error {} colliding with any other `.css` or
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
-    width: 440px;
 }
 
 .header {
     color: #fff;
+    justify-content: center;
+    display: flex;
+    left: 0px;
+    box-sizing: border-box;
+    z-index: 3;
+    width: 100%;
+    height: 93px;
+    font-size: 15px;
+    font-weight: 500;
+    box-shadow: none;
 }
 
-.title {
-    margin: 40px 0;
-    font-size: 40px;
-    font-weight: 700;
-    color: #fff;
-    text-align: center;
-    padding: 0 16px;
-    line-height: 50px;
+.select {
+    color:#7e4bde;
+    padding: 15px;
+    padding-left: 18px;
+    padding-right: 18px;
+    color:#885bde;
 }
-
 .input {
     outline: none;
-    padding: 9px 16px;
     border-radius: 10px;
     background-color: #3f4273;
     margin-bottom: 26px;
@@ -47,37 +49,6 @@ You do not need to worry about .error {} colliding with any other `.css` or
 .input:hover,
 .input:focus {
     border-color: #7e4bde;
-}
-
-.term {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #fff;
-    font-size: 14px;
-    align-self: flex-start;
-    padding-bottom: 26px;
-}
-
-
-.term input {
-    margin-right: 12px;
-    width: 24px;
-    height: 24px;
-    border-radius: 6px;
-    background-color: #3f4273;
-    border: 1px solid #3f4273;
-}
-
-.term input:hover {
-    border-color: #7e4bde;
-}
-
-.term a {
-    margin-left: 4px;
-    text-decoration: underline;
-    font-weight: 600;
-    margin: 0 4px;
 }
 
 .login {
@@ -97,7 +68,6 @@ You do not need to worry about .error {} colliding with any other `.css` or
 
 .other-login {
     display: flex;
-    justify-content: space-between;
     align-items: center;
     padding: 20px 0;
     width: 100%;
@@ -112,9 +82,8 @@ You do not need to worry about .error {} colliding with any other `.css` or
     color: #000;
     border-radius: 10px;
     font-weight: 700;
-    padding: 0 12px;
     font-size: 14px;
-    width: 100%;
+    width: 31%;
     cursor: pointer;
 }
 
@@ -133,12 +102,17 @@ You do not need to worry about .error {} colliding with any other `.css` or
     padding: 8px 0;
 }
 
-.link a {
-    margin-left: 4px;
-    text-decoration: underline;
-    font-weight: 600;
+.buttonSignUp {
+    border-color: rgb(128 92 214);
+    border-radius: 25px;
+    border-width: 2px;
+    padding: 15px;
+    padding-left: 30px;
+    padding-right: 30px;
+    color: #885bde;
+    font-weight: 700px;
 }
-
-.link a:hover {
-    color: #7e4bde;
+.buttonSignUp:hover {
+    background-color: rgb(128 92 214);
+    color: white;
 }
