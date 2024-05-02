@@ -3,6 +3,8 @@ import { useRef, useState } from "react";
 import styles from "./index.module.scss";
 import { courses } from "./fake";
 import Backspace from "@mui/icons-material/Backspace";
+import { handleLogout } from "@/pages/lib/auth";
+import { useRouter } from "next/navigation";
 
 export interface userPageProps {}
 
@@ -13,6 +15,8 @@ export function UserPage(props: userPageProps) {
   const [currentSectionIndex, setCurrentSectionIndex] = useState(0);
   const [currentTutorialIndex, setCurrentTutorialIndex] = useState(0);
   const [isOpenChooseChapter, setOpenChooseChapter] = useState(false);
+
+  const router = useRouter();
 
   const [renderTutorials, setRenderTutorials] = useState<
     { type: string; data: object | ITutorial; isPass: boolean }[]
@@ -96,7 +100,7 @@ export function UserPage(props: userPageProps) {
   };
   const callGetSectionInfo = async (
     sectionId: string,
-    sectionIndex: number,
+    sectionIndex: number
   ) => {
     // localStorage.setItem("CurrentSectionId", sectionId);
     // localStorage.setItem("ChooseSectionIndex", sectionIndex.toString());
@@ -347,8 +351,9 @@ export function UserPage(props: userPageProps) {
                 <div className={styles["user-info-menu"]}>
                   <div
                     className={styles["user-info-menu-item"]}
-                    onClick={() => {
-                      //xử lý logout
+                    onClick={async () => {
+                      await handleLogout();
+                      router.push("/login");
                     }}
                   >
                     <svg

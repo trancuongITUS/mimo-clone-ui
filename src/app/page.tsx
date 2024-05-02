@@ -212,7 +212,7 @@ export default function Home() {
                           className="flex h-14 w-full items-center justify-center space-x-2 rounded-xl bg-marketing-button-secondary-enabled px-3 hover:bg-marketing-button-secondary-hover undefined bg-white"
                           onClick={async () => {
                             await handleGoogleLogin();
-                            router.push("/settings");
+                            router.push("/user-page");
                           }}
                         >
                           <svg
