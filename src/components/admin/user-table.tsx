@@ -5,24 +5,27 @@ import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Button from '@mui/material/Button';
+import Link from 'next/link';
 
 export interface User {
-    id: number;
-    name: String;
-    email: String;
-    username: String;
+    id: string;
+    name: string;
+    email: string;
+    username: string;
 }
 
-function UserRow( {user}: {user: User}) {
+function UserRow({user}: {user: User}) {
     return (
         <TableRow>
             <TableCell className="font-medium text-white">{user.name}</TableCell>
             <TableCell className=' text-white'>{user.email}</TableCell>
             <TableCell className=' text-white'>{user.username}</TableCell>
             <TableCell>
-                <Button className="w-full" size="medium" variant="outlined" disabled>
-                    More
-                </Button>
+                <Link href={`/admin/${user.id}`}>
+                    <Button className="w-full" size="medium" variant="outlined">
+                        Edit
+                    </Button>
+                </Link>
             </TableCell>
         </TableRow>
     )

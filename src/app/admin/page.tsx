@@ -1,16 +1,11 @@
 import { Layout } from "@/components/admin/layout";
 import { SearchBar } from "@/components/admin/search";
 import { UsersTable } from "@/components/admin/user-table";
+import { usersData } from "@/components/admin/static-data";
 
-import styles from "./index.module.css";
-import { User } from "@/components/admin/user-table";
-import { generateRandomUser } from '@/components/admin/utils'
-
-export default function Admin() {
-    const users: User[] = [];
-    for (let i = 1; i <= 45; i++) {
-        users.push(generateRandomUser(i));
-    }
+export default async function Admin({params}: {params: {q: string}}) {
+    const search = params.q ?? ''; // Use this to query to db
+    const users = usersData;
     const newOffset = 0;
     return(
       <div>
@@ -20,7 +15,7 @@ export default function Admin() {
               <h1 className="font-semibold text-lg md:text-2xl">Users</h1>
             </div>
             <div className="w-full mb-4">
-              <SearchBar />
+              <SearchBar value={params.q} />
             </div>
             <UsersTable users={users} offset={newOffset} />
           </div>

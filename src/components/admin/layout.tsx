@@ -17,7 +17,7 @@ export function Layout({children}: any) {
             <div className="flex-1 overflow-auto py-2">
                 <nav className="grid items-start px-4 text-sm font-medium">
                     <NavItem href='/admin'>Users</NavItem>
-                    {/* <NavItem href='/admin/settings'>Settings</NavItem> */}
+                    <NavItem href='/admin/settings'>Settings</NavItem>
                 </nav>
             </div>
         </div>
