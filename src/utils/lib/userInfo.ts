@@ -1,7 +1,6 @@
 import { UserInfo } from "@/utils/types/user";
-import { get, getDatabase, ref, set } from "firebase/database";
-
-const db = getDatabase();
+import { get, ref, set } from "firebase/database";
+import { db } from "../firebase/config";
 
 export const updateUserInfo = (userId: string, userInfo: UserInfo) => {
   set(ref(db, `users/${userId}`), userInfo);

@@ -9,9 +9,9 @@ import toast from "react-hot-toast";
 
 import ProtectedRouter from "@/components/ProtectedRouter";
 
-import { handleLogout } from "../../pages/lib/auth";
-import { useCurrentUser, useProtectedRoute } from "../../pages/lib/hooks";
-import { fetchUserInfo, updateUserInfo } from "../../pages/lib/userInfo";
+import { handleLogout } from "../../utils/lib/auth";
+import { useCurrentUser, useProtectedRoute } from "../../utils/lib/hooks";
+import { fetchUserInfo, updateUserInfo } from "../../utils/lib/userInfo";
 import styles from "./index.module.css";
 import { UserInfo } from "@/utils/types/user";
 

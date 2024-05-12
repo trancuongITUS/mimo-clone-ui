@@ -1,5 +1,5 @@
-import { googleAuthProvider } from "@/pages/firebase/authProviders/googleAuthProvider";
-import { auth } from "@/pages/firebase/config";
+import { googleAuthProvider } from "@/utils/firebase/authProviders/googleAuthProvider";
+import { auth } from "@/utils/firebase/config";
 import { signInWithPopup } from "firebase/auth";
 
 export async function handleGoogleLogin() {

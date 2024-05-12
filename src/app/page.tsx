@@ -4,7 +4,7 @@
 /* eslint-disable @next/next/no-html-link-for-pages */
 
 "use client";
-import { handleGoogleLogin } from "@/pages/lib/auth";
+import { handleGoogleLogin } from "@/utils/lib/auth";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 

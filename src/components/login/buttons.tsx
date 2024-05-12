@@ -1,6 +1,6 @@
 "use client";
 
-import { handleGoogleLogin } from "@/pages/lib/auth";
+import { handleGoogleLogin } from "@/utils/lib/auth";
 import styles from "@/app/login/index.module.css";
 import { useRouter } from "next/navigation";
 
