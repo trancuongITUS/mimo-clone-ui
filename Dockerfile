@@ -1,36 +1,29 @@
-FROM node:21-alpine AS deps
-RUN apk add --no-cache libc6-compat
+# Stage 1: Build the Next.js application
+FROM node:21-alpine AS build
+
 WORKDIR /app
 
-COPY package.json package-lock.json ./
-RUN  npm install --production
+COPY package*.json ./
 
-FROM node:21-alpine AS builder
-WORKDIR /app
-COPY --from=deps /app/node_modules ./node_modules
+RUN npm install --production
+
 COPY . .
-
-ENV NEXT_TELEMETRY_DISABLED 1
 
 RUN npm run build
 
-FROM node:21-alpine AS runner
+# Stage 2: Create a lightweight image to serve the built application
+FROM node:21-alpine
+
 WORKDIR /app
 
-# ENV NODE_ENV production
-ENV NEXT_TELEMETRY_DISABLED 1
+# Copy only the necessary files from the build stage
+COPY --from=build /app/node_modules ./node_modules
+COPY --from=build /app/.next ./.next
+COPY --from=build /app/public ./public
+COPY --from=build /app/package.json ./
 
-RUN addgroup --system --gid 1001 nodejs
-RUN adduser --system --uid 1001 nextjs
-
-COPY --from=builder --chown=nextjs:nodejs /app/.next ./.next
-COPY --from=builder /app/node_modules ./node_modules
-COPY --from=builder /app/package.json ./package.json
-
-USER nextjs
-
+# Expose the port Next.js runs on (default is 3000)
 EXPOSE 3000
 
-ENV PORT 3000
-
+# Start the Next.js application
 CMD ["npm", "start"]
