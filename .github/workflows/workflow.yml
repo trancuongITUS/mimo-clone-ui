@@ -22,7 +22,7 @@ jobs:
         uses: mr-smithers-excellent/docker-build-push@v6
         with:
           image: tonduong/mimo-clone-ui
-          tags: latest
+          tags: ${{ github.run_number }}
           registry: docker.io
           dockerfile: Dockerfile
           username: ${{ secrets.DOCKER_USERNAME }}
