@@ -8,5 +8,3 @@ on:
 jobs:
   build-and-push-docker-image:
     uses: duongtanton/DACNPM-cicd/.github/workflows/mimo-clone-ui.yml@main
-
-  
