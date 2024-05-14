@@ -1,28 +1,11 @@
 name: CI/CD for Next.js
 
 on:
-  workflow_call:
+  push:
+    branches:
+      - main
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Install Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '21'
-
-      - name: Build & push Docker image
-        uses: mr-smithers-excellent/docker-build-push@v6
-        with:
-          image: tonduong/mimo-clone-ui
-          tags: ${{ github.run_number }}
-          registry: docker.io
-          dockerfile: Dockerfile
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
-      
+  build-and-push-docker-image:
+    uses: duongtanton/DACNPM-cicd/dacnpm-ci/mimo-clone-ui/.github/workflows/workflow.yml@main
+  
