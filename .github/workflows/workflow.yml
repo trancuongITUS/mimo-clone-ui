@@ -8,3 +8,6 @@ on:
 jobs:
   build-and-push-docker-image:
     uses: duongtanton/DACNPM-cicd/.github/workflows/mimo-clone-ui.yml@main
+    secrets:
+      DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+      DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
