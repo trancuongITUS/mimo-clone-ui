@@ -1,7 +1,9 @@
 import { ThemeConfig, theme } from "antd";
 
 const antdToken: ThemeConfig = {
-  token: {},
+  token: {
+    colorPrimary: "#885bde",
+  },
   components: {
     Modal: {
       contentBg: "#242746",

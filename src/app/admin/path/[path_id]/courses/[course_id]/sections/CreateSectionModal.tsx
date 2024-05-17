@@ -3,10 +3,13 @@ import Image from "next/image";
 import Textarea from "@/components/styledComponents/TextArea";
 import { Modal, Select, Space } from "antd";
 import styles from "./CreateSelectionModal.module.css";
+import { SectionType, SupportedCodeLanguage, TSection } from "@/utils/types";
+import { useState } from "react";
 
 type Props = {
   isOpen: boolean;
   onClose: () => void;
+  defaultSection?: TSection;
 };
 
 type TCodeLanguageOption = {
@@ -15,7 +18,7 @@ type TCodeLanguageOption = {
   icon: any;
 };
 
-const CodeLanguageOption: TCodeLanguageOption[] = [
+export const CodeLanguageOption: TCodeLanguageOption[] = [
   {
     value: "javascript",
     label: "Javascript",
@@ -71,7 +74,18 @@ const SectionsType: { value: string; label: string }[] = [
   },
 ];
 
-const CreateSectionModal = ({ isOpen, onClose }: Props) => {
+const CreateSectionModal = ({ isOpen, onClose, defaultSection }: Props) => {
+  const [name, setName] = useState<string>(defaultSection?.title || "");
+  const [description, setDescription] = useState<string>(
+    defaultSection?.descriptionContent || ""
+  );
+  const [codeLanguage, setCodeLanguage] = useState<SupportedCodeLanguage>(
+    defaultSection?.codeLanguage || SupportedCodeLanguage.PYTHON
+  );
+  const [sectionType, setSectionType] = useState<SectionType>(
+    defaultSection?.type || SectionType.COURSE
+  );
+
   return (
     <Modal
       open={isOpen}
@@ -82,14 +96,29 @@ const CreateSectionModal = ({ isOpen, onClose }: Props) => {
     >
       <div className="flex flex-1 flex-col gap-1 mt-6">
         <div>
-          <Input label="Section Name" />
+          <Input
+            label="Section Name"
+            value={name}
+            onChange={(e) => setName(e.currentTarget.value)}
+          />
         </div>
         <div>
-          <Textarea label="Description" className="!min-h-20" />
+          <Textarea
+            label="Description"
+            className="!min-h-20"
+            value={description}
+            onChange={(e) => setDescription(e.currentTarget.value)}
+          />
         </div>
         <div>
           <p className="text-[0.9rem] leading-7">Code Language</p>
-          <Select className={styles.select}>
+          <Select
+            className={styles.select}
+            value={codeLanguage}
+            onChange={(value) => {
+              setCodeLanguage(value);
+            }}
+          >
             {CodeLanguageOption.map((item) => (
               <Select.Option key={item.value}>
                 <Space>
@@ -102,7 +131,14 @@ const CreateSectionModal = ({ isOpen, onClose }: Props) => {
         </div>
         <div>
           <p className="text-[0.9rem] leading-7">Section Type</p>
-          <Select className={styles.select} options={SectionsType}>
+          <Select
+            className={styles.select}
+            options={SectionsType}
+            value={sectionType}
+            onChange={(value) => {
+              setSectionType(value);
+            }}
+          >
             {CodeLanguageOption.map((item) => (
               <Select.Option key={item.value}>
                 <Space>
