@@ -3,11 +3,11 @@ FROM node:21-alpine AS build
 
 WORKDIR /app
 
-COPY package*.json ./
+COPY . .
 
 RUN npm install
 
-COPY . .
+RUN npm run lint
 
 RUN npm run build
 
