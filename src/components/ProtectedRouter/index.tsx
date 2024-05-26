@@ -1,7 +1,5 @@
 "use client";
-import { handleLogout } from "@/app/lib/auth";
 import { useCurrentUser, useProtectedRoute } from "@/app/lib/hooks";
-import { useRouter } from "next/navigation";
 
 type Props = {
   children: React.ReactNode;
