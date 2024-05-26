@@ -1,4 +1,6 @@
+import { CoursesPathAPI } from "@/api/coursesPath";
 import { auth } from "@/utils/firebase/config";
+import { AUTH_TOKEN_LOCAL_STORAGE_KEY } from "@/utils/constant";
 import { User, onAuthStateChanged } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -9,8 +11,13 @@ export const useProtectedRoute = () => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (!user) {
+        localStorage.removeItem(AUTH_TOKEN_LOCAL_STORAGE_KEY);
         // User is not authenticated, redirect to '/login'
         router.push("/login");
+      } else {
+        user.getIdToken().then((token) => {
+          localStorage.setItem(AUTH_TOKEN_LOCAL_STORAGE_KEY, token);
+        });
       }
     });
 
