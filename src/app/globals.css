@@ -43,3 +43,13 @@ li {
   color: white;
 }
 /* CSS */
+
+.border-product2-border-secondary {
+  border-color: rgb(74 77 133)
+}
+.text-product2-content-primary {
+  color: rgb(255 255 255)
+}
+.text-product2-content-secondary {
+  color: rgb(185 187 210)
+}

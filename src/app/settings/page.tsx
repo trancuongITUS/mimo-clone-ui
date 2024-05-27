@@ -14,7 +14,7 @@ import { useCurrentUser, useProtectedRoute } from "../../utils/lib/hooks";
 import { fetchUserInfo, updateUserInfo } from "../../utils/lib/userInfo";
 import styles from "./index.module.css";
 import { UserInfo } from "@/utils/types/user";
-import Header from "@/components/common/header";
+import Header from "@/components/common/layout/header";
 
 const Settings = () => {
   useProtectedRoute();

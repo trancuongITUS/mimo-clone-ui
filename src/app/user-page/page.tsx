@@ -1,5 +1,16 @@
-export interface userPageProps {}
+"use client";
+import ProtectedRouter from "@/components/ProtectedRouter";
+import Header from "@/components/common/layout/header";
+import Layout from "@/components/common/layout";
 
-export default function UserPage(props: userPageProps) {
-  return <></>;
+export interface CoursePathProps {}
+
+export default function CoursesPath(props: CoursePathProps) {
+  return (
+    <ProtectedRouter>
+      <Layout>
+        <div className={"text-white"}>Course Path</div>
+      </Layout>
+    </ProtectedRouter>
+  );
 }

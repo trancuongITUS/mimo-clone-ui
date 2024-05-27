@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import React from "react";
 import Image from "next/image";
-import LogoSRC from "../../../../public/logo.svg";
+import LogoSRC from "../../../../../public/logo.svg";
 import { Popover } from "antd";
 import { handleLogout } from "@/utils/lib/auth";
 import { useRouter } from "next/navigation";
