@@ -10,7 +10,7 @@ export function GoogleLoginButton() {
     <div
       className={styles["btn-other"]}
       onClick={async () => {
-        const user = await handleGoogleLogin();
+        await handleGoogleLogin();
         router.push("/suggest-courses");
       }}
     >

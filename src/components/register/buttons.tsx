@@ -1,11 +1,19 @@
 "use client";
 
 import { handleGoogleLogin } from "@/utils/lib/auth";
-import styles from "@/app/login/index.module.css";
+import styles from "@/app/register/index.module.css";
+import { useRouter } from "next/navigation";
 
 export function GoogleSignUpButton() {
+  const router = useRouter();
   return (
-    <div className={styles["btn-other"]} onClick={handleGoogleLogin}>
+    <div
+      className={styles["btn-other"]}
+      onClick={async () => {
+        await handleGoogleLogin();
+        router.push("/suggest-courses");
+      }}
+    >
       <svg
         width="100%"
         height="100%"

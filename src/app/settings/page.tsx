@@ -14,6 +14,7 @@ import { useCurrentUser, useProtectedRoute } from "../../utils/lib/hooks";
 import { fetchUserInfo, updateUserInfo } from "../../utils/lib/userInfo";
 import styles from "./index.module.css";
 import { UserInfo } from "@/utils/types/user";
+import Header from "@/components/common/layout/header";
 
 const Settings = () => {
   useProtectedRoute();
@@ -57,6 +58,7 @@ const Settings = () => {
 
   return (
     <ProtectedRouter>
+      <Header />
       <div className={styles.page}>
         <div className={styles.content}>
           <div className={styles.section}>
