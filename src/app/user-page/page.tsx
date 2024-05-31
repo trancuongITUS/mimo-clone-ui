@@ -1,11 +1,8 @@
 "use client";
 import ProtectedRouter from "@/components/ProtectedRouter";
-import Header from "@/components/common/layout/header";
 import Layout from "@/components/common/layout";
 
-export interface CoursePathProps {}
-
-export default function CoursesPath(props: CoursePathProps) {
+export default function CoursesPath() {
   return (
     <ProtectedRouter>
       <Layout>

@@ -21,7 +21,7 @@ const Layout = ({ children }: TProps) => {
         </div>
         <div className="flex h-[calc(100vh-49px)] w-full flex-col items-center overflow-y-auto relative">
           <div
-            className="absolute cursor-pointer hover:bg-[#4a4d85] flex items-center space-x-2 rounded-lg py-1 pl-1 pr-3"
+            className="absolute cursor-pointer hover:bg-[#4a4d85] flex items-center space-x-2 rounded-lg py-1 pl-1 pr-3 z-10"
             style={{ left: 16, top: 16 }}
             onClick={() => setIsExpandSideBar((prev) => !prev)}
           >

@@ -104,7 +104,7 @@ const Header = () => {
             <div className="ml-6 flex h-full space-x-2">
               <a
                 className="font-medium text-sm -mb-[1px] flex items-center justify-center border-b border-[#b89ced] text-product2-content-primary"
-                href="/web/125/section/0"
+                href="/user-page"
               >
                 <span className="rounded-lg px-2 py-1.5 hover:bg-[#4a4d85]">
                   Learn

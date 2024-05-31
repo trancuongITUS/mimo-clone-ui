@@ -43,13 +43,82 @@ li {
   color: white;
 }
 /* CSS */
+@layer components {
+  .border-product2-border-secondary {
+    border-color: rgb(74 77 133)
+  }
+  .text-product2-content-primary {
+    color: rgb(255 255 255)
+  }
+  .text-product2-content-secondary {
+    color: rgb(185 187 210)
+  }
+  .animate-leave {
+    animation: leave .2s ease-in forwards
+  }
+  .animate-enter-delay{
+    animation: enter-delay .6s ease-out both
+  }
+  
+  @keyframes enter-delay {
+    0% {
+      transform: scale(0.96);
+      opacity: 0;
+      height: 0;
+    }
+    33% {
+      transform: scale(0.96);
+      opacity: 0;
+      height: 0;
+    }
+    34% {
+      transform: scale(0.96);
+      opacity: 0;
+      height: auto;
+    }
+    100% {
+      transform: scale(1);
+      opacity: 1;
+      height: auto;
+    }
+  }
+  
+  @keyframes leave {
+    0% {
+      transform: scale(1);
+      opacity: 1;
+      height: auto;
+    }
+    99% {
+      transform: scale(.96);
+      opacity: 0;
+      height: auto;
+    }
+    100% {
+      transform: scale(.96);
+      opacity: 0;
+      height: 0;
+    }
+  }
+  
+  .bg-product2-background-tertiary:hover{
+    background-color: rgb(74 77 133)
+  }
+  .border-product2-border-accentLight {
+    border-color: rgb(184 156 237)
+  }
+  
+  .bg-product2-background-tertiary {
+    background: rgb(74 77 133);
+  }
 
-.border-product2-border-secondary {
-  border-color: rgb(74 77 133)
-}
-.text-product2-content-primary {
-  color: rgb(255 255 255)
-}
-.text-product2-content-secondary {
-  color: rgb(185 187 210)
+  .bg-product-background-secondary-dark {
+    background-color: rgb(51 54 97)
+  }
+  .border-product2-border-secondary {
+    border-color: rgb(74 77 133)
+  }
+  .min-w-appContent {
+    min-width: 768px;
+  }
 }
