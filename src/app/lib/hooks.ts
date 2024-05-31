@@ -1,4 +1,4 @@
-import { CoursesPathAPI } from "@/api/coursesPath";
+import { CoursesPathAPI } from "@/api/courses";
 import { auth } from "@/utils/firebase/config";
 import { AUTH_TOKEN_LOCAL_STORAGE_KEY } from "@/utils/constant";
 import { User, onAuthStateChanged } from "firebase/auth";
