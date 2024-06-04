@@ -4,7 +4,7 @@ import { TutorialAPI } from "@/api/tutorials";
 import ProtectedRouter from "@/components/ProtectedRouter";
 import Layout from "@/components/common/layout";
 import { TSection, TTutorial } from "@/utils/types";
-import { useParams } from "next/navigation";
+import { useParams, usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function SectionPage() {
@@ -12,6 +12,8 @@ export default function SectionPage() {
     courseId: string;
     sectionId: string;
   }>();
+  const router = useRouter();
+  const pathname = usePathname();
 
   const [currentSection, setCurrentSection] = useState<TSection>(null);
   const [tutorials, setTutorials] = useState<TTutorial[]>([]);
@@ -64,6 +66,9 @@ export default function SectionPage() {
                     <div
                       key={item.id}
                       className="z-10 flex w-full items-center justify-between space-x-2 rounded-xl border border-product2-border-secondary bg-product2-background-primary p-3 cursor-pointer hover:bg-[#4a4d85]"
+                      onClick={() => {
+                        router.push(pathname + `/tutorial/${item.id}`);
+                      }}
                     >
                       <div className="flex items-center">
                         <p className="font-mimopro font-normal text-xs min-w-[24px] self-start leading-6 text-product2-content-secondary ">
