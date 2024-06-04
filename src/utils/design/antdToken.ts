@@ -3,6 +3,7 @@ import { ThemeConfig, theme } from "antd";
 const antdToken: ThemeConfig = {
   token: {
     colorPrimary: "#885bde",
+    colorBgContainer: "rgb(141 96 226)",
     colorBgElevated: "#333661",
   },
   components: {

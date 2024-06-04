@@ -42,6 +42,7 @@ ol,
 li {
   color: white;
 }
+
 /* CSS */
 @layer components {
   .border-product2-border-secondary {
@@ -121,4 +122,215 @@ li {
   .min-w-appContent {
     min-width: 768px;
   }
+  .bg-product2-background-secondary{
+    background-color: rgb(51 54 97);
+  }
+  .bg-product-progress-empty-dark{ 
+    background-color: rgb(74 77 133/var(--tw-bg-opacity));
+  }
+  .bg-product-progress-primary-dark {
+    background-color: rgb(156 117 230/var(--tw-bg-opacity));
+  }
+  .text-product-text-secondary-light {
+    color: rgb(211 212 218)
+  }
+  .bg-product-card-enabled-dark{
+    background-color: rgb(63 66 115);
+  }
+  .border-product-line-active-dark{
+    border-color: rgb(141 96 226);
+  }
+  .bg-product-card-pressed-dark {
+    background-color: rgb(51 54 97)
+  }
+  .border-product-line-active-dark {
+  border-color: rgb(141 96 226)
+  }
+  .text-product-error-default-dark{
+    color:rgb(243 125 141)
+  }
+  .border-product-error-default-dark{
+    border-color: rgb(243 125 141);
+  }
+  .text-product-line-active-dark {
+    color: rgb(141 96 226)
+  }
+  .border-product-line-primary-dark {
+    border-color: rgb(63 66 115)
+  }
+  .border-product-line-active-light {
+    border-color: rgb(126 75 222)
+  }
+  .bg-product-line-primary-dark {
+    background-color: rgb(63 66 115)
+  }
+  .text-product-button-primary-text-light{
+    color: rgb(255 255 255/var(--tw-text-opacity))
+  }
+  .bg-product-button-primary-enabled-dark {
+    background-color: rgb(141 96 226/var(--tw-bg-opacity))
+  }
+  .text-product-text-primary-dark {
+    color: rgb(255 255 255)
+  }
+  .bg-product-line-secondary-dark{
+    background-color: rgb(74 77 133)
+  }
+}
+
+
+code[class*='language-'],
+pre[class*='language-'] {
+  color: #f0f5fd;
+  background: #252746;
+  font-family: var(--font-aeonikMono), Monaco, 'Andale Mono', 'Ubuntu Mono',
+    monospace;
+  font-size: 14px;
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: normal;
+  line-height: 22px;
+
+  -moz-tab-size: 4;
+  -o-tab-size: 4;
+  tab-size: 4;
+
+  -webkit-hyphens: none;
+  -moz-hyphens: none;
+  -ms-hyphens: none;
+  hyphens: none;
+
+  padding: 0.5rem 1rem;
+}
+code[class*='language-json'],
+pre[class*='language-json'] {
+  color: #fbab7b;
+  background: #333661;
+  font-family: var(--font-aeonikMono), Monaco, 'Andale Mono', 'Ubuntu Mono',
+    monospace;
+  font-size: 14px;
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: normal;
+  line-height: 22px;
+
+  -moz-tab-size: 4;
+  -o-tab-size: 4;
+  tab-size: 4;
+
+  -webkit-hyphens: none;
+  -moz-hyphens: none;
+  -ms-hyphens: none;
+  hyphens: none;
+
+  padding: 1rem 0;
+
+  white-space: pre-wrap;
+}
+
+/* round the left corners of the first input element */
+code[class*='language-'] + input:first-of-type {
+  border-top-left-radius: 6px;
+  border-bottom-left-radius: 6px;
+}
+
+/* round the right corners of the last input element */
+code[class*='language-'] + input:last-of-type {
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+}
+
+/* if there is a content before the input element and a gap after the input element, round the left corners */
+code[class*='language-'][data-content='content']
+  + input[data-next-element='gap'] {
+  border-top-left-radius: 6px;
+  border-bottom-left-radius: 6px;
+}
+
+/* if there is a content before the input element and a content after the input element, round all corners */
+code[class*='language-'][data-content='content']
+  + input[data-next-element='content'] {
+  border-radius: 6px;
+  border-radius: 6px;
+}
+
+/* if there is a gap before the input element and a content after the input element, round the right corners */
+code[class*='language-'][data-content='gap']
+  + input[data-next-element='content'] {
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+}
+
+.token.block-comment,
+.token.prolog,
+.token.cdata,
+.token.comment {
+  color: #6971a6;
+}
+
+.token.doctype,
+.token.punctuation {
+  color: #9798a9;
+}
+
+.token.tag,
+.token.namespace,
+.token.deleted {
+  color: #96bcef;
+}
+
+.token.attr-name {
+  color: #bfdaf9;
+}
+
+.token.char,
+.token.regex,
+.token.variable {
+  color: #ffc4fb;
+}
+
+.token.attr-value,
+.token.string {
+  color: #fbab7b;
+}
+
+.token.boolean,
+.token.number,
+.token.function {
+  color: #96bcef;
+}
+
+.token.property,
+.token.class-name,
+.token.constant,
+.token.symbol {
+  color: #96bcef;
+}
+
+.token.selector,
+.token.atrule,
+.token.keyword,
+.token.builtin {
+  color: #fbab7b;
+}
+
+.token.operator,
+.token.entity,
+.token.url {
+  color: #f284ef;
+}
+
+.token.inserted {
+  color: green;
+}
+
+.token.important {
+  color: #ffd011;
+}
+pre>code {
+  padding: 0 !important
 }
