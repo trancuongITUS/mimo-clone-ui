@@ -8,9 +8,15 @@ type Props = {
   isOpen: boolean;
   onClose: () => void;
   defaultCourse?: TSection;
+  onOk: (payload: { name: string; description: string }) => Promise<void>;
 };
 
-const CreateCoursesModal = ({ isOpen, onClose, defaultCourse }: Props) => {
+const CreateCoursesModal = ({
+  isOpen,
+  onClose,
+  defaultCourse,
+  onOk,
+}: Props) => {
   const [name, setName] = useState<string>(defaultCourse?.name || "");
   const [description, setDescription] = useState<string>(
     defaultCourse?.description || ""
@@ -19,15 +25,16 @@ const CreateCoursesModal = ({ isOpen, onClose, defaultCourse }: Props) => {
   return (
     <Modal
       open={isOpen}
-      title={"Create Course"}
+      title={"Create New Section"}
       onCancel={onClose}
       okText={"Create"}
       okButtonProps={{ style: { backgroundColor: "#885bde" } }}
+      onOk={() => onOk({ name, description })}
     >
       <div className="flex flex-1 flex-col gap-6 mt-6">
         <div>
           <Input
-            label="Course name"
+            label="Section name"
             value={name}
             onChange={(e) => setName(e.currentTarget.value)}
           />

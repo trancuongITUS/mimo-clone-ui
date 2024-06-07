@@ -11,6 +11,7 @@ import DriveFileMoveOutlinedIcon from "@mui/icons-material/DriveFileMoveOutlined
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import Link from "next/link";
 import { SectionAPI } from "@/api/section";
+import toast from "react-hot-toast";
 
 const CreateCourse = () => {
   const { courseId } = useParams<{ courseId: string }>();
@@ -30,6 +31,23 @@ const CreateCourse = () => {
     if (courseId) fetchSectionByCourseId(courseId);
   }, [courseId]);
 
+  const handleCreateSection = async ({ name, description }) => {
+    try {
+      const data = await SectionAPI.createSection({
+        name,
+        description,
+        isLocked: true,
+        index: sections.length,
+        courseId,
+      });
+      setSections((prev) => [...prev, data]);
+      toast.success("Create section success");
+    } catch (err) {
+      toast.error("Create section fail ! ");
+    } finally {
+      setOpenCreateCourseModal(false);
+    }
+  };
   return (
     <>
       <Layout>
@@ -47,7 +65,7 @@ const CreateCourse = () => {
                     setOpenCreateCourseModal(true);
                   }}
                 >
-                  Add Course
+                  Add Section
                 </Button>
               </div>
             </div>
@@ -84,7 +102,7 @@ const CreateCourse = () => {
                             ></AntdButton>
                           </Link>
                         </Tooltip>
-                        <Checkbox checked={item.isBlocked}>Blocked</Checkbox>
+                        <Checkbox checked={item.isLocked}>Blocked</Checkbox>
                         <Tooltip title={"Edit course path"}>
                           <AntdButton
                             type="text"
@@ -109,6 +127,7 @@ const CreateCourse = () => {
           isOpen={openCreateCourseModal}
           onClose={() => setOpenCreateCourseModal(false)}
           defaultCourse={openingCourse}
+          onOk={handleCreateSection}
         />
       )}
     </>

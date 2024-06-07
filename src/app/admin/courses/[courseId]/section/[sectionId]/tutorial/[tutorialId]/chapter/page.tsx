@@ -43,7 +43,7 @@ const Lessons = () => {
                   setOpenCreateCourseModal(true);
                 }}
               >
-                Add Section
+                Add Chapter
               </Button>
             </div>
           </div>

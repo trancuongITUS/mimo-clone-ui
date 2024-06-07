@@ -8,9 +8,15 @@ type Props = {
   isOpen: boolean;
   onClose: () => void;
   defaultPath?: TCourse;
+  onOk: (payload: { name: string; description: string }) => Promise<void>;
 };
 
-const CreateCoursesPathModal = ({ isOpen, onClose, defaultPath }: Props) => {
+const CreateCoursesPathModal = ({
+  isOpen,
+  onClose,
+  defaultPath,
+  onOk,
+}: Props) => {
   const [name, setName] = useState<string>(defaultPath?.name || "");
   const [description, setDescription] = useState<string>(
     defaultPath?.description || ""
@@ -23,11 +29,12 @@ const CreateCoursesPathModal = ({ isOpen, onClose, defaultPath }: Props) => {
       onCancel={onClose}
       okText={"Create"}
       okButtonProps={{ style: { backgroundColor: "#885bde" } }}
+      onOk={() => onOk({ name, description })}
     >
       <div className="flex flex-1 flex-col gap-6 mt-6">
         <div>
           <Input
-            label="Course Path name"
+            label="Course name"
             value={name}
             onChange={(e) => setName(e.currentTarget.value)}
           />

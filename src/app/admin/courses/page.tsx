@@ -10,6 +10,7 @@ import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import DriveFileMoveOutlinedIcon from "@mui/icons-material/DriveFileMoveOutlined";
 import Link from "next/link";
 import { CoursesAPI } from "@/api/courses";
+import toast from "react-hot-toast";
 
 const CreateCourses = () => {
   const [allCourses, setAllCourses] = useState<TCourse[]>([]);
@@ -24,6 +25,24 @@ const CreateCourses = () => {
     };
     fetchAllCoursesPath();
   }, []);
+
+  const handleCreateCourse = async ({ name, description }) => {
+    try {
+      const data = await CoursesAPI.createCourse({
+        name,
+        description,
+        isPublished: false,
+        iconUrl: "",
+      });
+      setAllCourses((prev) => [...prev, data]);
+      toast.success("Create course success");
+    } catch (err) {
+      toast.error("Create course fail ! ");
+    } finally {
+      setOpenCreateCourseModal(false);
+    }
+  };
+
   return (
     <>
       <Layout>
@@ -36,7 +55,7 @@ const CreateCourses = () => {
                 setOpenCreateCourseModal(true);
               }}
             >
-              Add Course Path
+              Add Course
             </Button>
           </div>
           <Space
@@ -95,6 +114,7 @@ const CreateCourses = () => {
           isOpen={openCreateCourseModal}
           onClose={() => setOpenCreateCourseModal(false)}
           defaultPath={openingCoursePath}
+          onOk={handleCreateCourse}
         />
       )}
     </>

@@ -10,6 +10,12 @@ type Props = {
   isOpen: boolean;
   onClose: () => void;
   defaultSection?: TTutorial;
+  onOk: (payload: {
+    title: string;
+    descriptionContent: string;
+    type: TutorialType;
+    codeLanguage: SupportedCodeLanguage;
+  }) => Promise<void>;
 };
 
 type TCodeLanguageOption = {
@@ -74,7 +80,12 @@ const SectionsType: { value: string; label: string }[] = [
   },
 ];
 
-const CreateSectionModal = ({ isOpen, onClose, defaultSection }: Props) => {
+const CreateSectionModal = ({
+  isOpen,
+  onClose,
+  defaultSection,
+  onOk,
+}: Props) => {
   const [name, setName] = useState<string>(defaultSection?.title || "");
   const [description, setDescription] = useState<string>(
     defaultSection?.descriptionContent || ""
@@ -89,15 +100,23 @@ const CreateSectionModal = ({ isOpen, onClose, defaultSection }: Props) => {
   return (
     <Modal
       open={isOpen}
-      title={"Create Section"}
+      title={"Create New Tutorial"}
       onCancel={onClose}
       okText={"Create"}
       okButtonProps={{ style: { backgroundColor: "#885bde" } }}
+      onOk={() =>
+        onOk({
+          title: name,
+          descriptionContent: description,
+          type: sectionType,
+          codeLanguage: codeLanguage,
+        })
+      }
     >
       <div className="flex flex-1 flex-col gap-1 mt-6">
         <div>
           <Input
-            label="Section Name"
+            label="Tutorial Name"
             value={name}
             onChange={(e) => setName(e.currentTarget.value)}
           />
@@ -130,7 +149,7 @@ const CreateSectionModal = ({ isOpen, onClose, defaultSection }: Props) => {
           </Select>
         </div>
         <div>
-          <p className="text-[0.9rem] leading-7">Section Type</p>
+          <p className="text-[0.9rem] leading-7">Tutorial Type</p>
           <Select
             className={styles.select}
             options={SectionsType}

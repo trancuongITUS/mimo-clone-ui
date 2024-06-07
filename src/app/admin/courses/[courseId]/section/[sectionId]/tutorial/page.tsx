@@ -23,6 +23,7 @@ import DriveFileMoveOutlinedIcon from "@mui/icons-material/DriveFileMoveOutlined
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import Link from "next/link";
 import { TutorialAPI } from "@/api/tutorials";
+import toast from "react-hot-toast";
 
 const FormatCodeLanguage = (value: SupportedCodeLanguage) => {
   const codeLanguageOption = CodeLanguageOption.find(
@@ -56,6 +57,31 @@ const Sections = () => {
     };
     fetchTutorials(sectionId);
   }, [sectionId]);
+
+  const handleCreateNewTutorial = async ({
+    title,
+    descriptionContent,
+    type,
+    codeLanguage,
+  }) => {
+    try {
+      const data = await TutorialAPI.createTutorial({
+        bannerIconUrl: "",
+        codeLanguage,
+        title,
+        descriptionContent,
+        type,
+        sectionId,
+        index: tutorials.length,
+      });
+      setTutorials((prev) => [...prev, data]);
+      toast.success("Create tutorial success");
+    } catch (err) {
+      toast.error("Create tutorial fail ! ");
+    } finally {
+      setOpenCreateCourseModal(false);
+    }
+  };
   return (
     <>
       <Layout>
@@ -81,7 +107,7 @@ const Sections = () => {
                   setOpenCreateCourseModal(true);
                 }}
               >
-                Add Section
+                Add Tutorial
               </Button>
             </div>
           </div>
@@ -159,6 +185,7 @@ const Sections = () => {
           isOpen={openCreateCourseModal}
           onClose={() => setOpenCreateCourseModal(false)}
           defaultSection={openingSection}
+          onOk={handleCreateNewTutorial}
         />
       )}
     </>
