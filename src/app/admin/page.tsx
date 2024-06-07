@@ -5,6 +5,7 @@ import { UsersTable } from "@/components/admin/user-table";
 import styles from "./index.module.css";
 import { User } from "@/components/admin/user-table";
 import { generateRandomUser } from "@/components/admin/utils";
+import ProtectedAdminRouter from "@/components/ProtectedAdminRouter";
 
 export default function Admin() {
   const users: User[] = [];
@@ -13,18 +14,17 @@ export default function Admin() {
   }
   const newOffset = 0;
   return (
-    <div>
-      <Layout>
-        <div className="flex min-h-screen flex-1 flex-col p-4">
-          <div className="flex items-center mb-8">
-            <h1 className="font-semibold text-lg md:text-2xl">Users</h1>
+    <ProtectedAdminRouter>
+      <div>
+        <Layout>
+          <div className="flex min-h-screen flex-1 flex-col p-4 w-full">
+            <div className="w-full mb-4 mt-16">
+              <SearchBar />
+            </div>
+            <UsersTable users={users} offset={newOffset} />
           </div>
-          <div className="w-full mb-4">
-            <SearchBar />
-          </div>
-          <UsersTable users={users} offset={newOffset} />
-        </div>
-      </Layout>
-    </div>
+        </Layout>
+      </div>
+    </ProtectedAdminRouter>
   );
 }

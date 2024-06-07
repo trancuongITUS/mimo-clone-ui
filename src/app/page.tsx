@@ -5,7 +5,6 @@
 
 "use client";
 import { handleGoogleLogin } from "@/utils/lib/auth";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 export default function Home() {

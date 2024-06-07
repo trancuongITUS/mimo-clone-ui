@@ -17,9 +17,9 @@ export interface User {
 function UserRow({ user }: { user: User }) {
   return (
     <TableRow>
-      <TableCell className="font-medium text-white">{user.name}</TableCell>
-      <TableCell className=" text-white">{user.email}</TableCell>
-      <TableCell className=" text-white">{user.username}</TableCell>
+      <TableCell className="font-medium !text-white">{user.name}</TableCell>
+      <TableCell className=" !text-white">{user.email}</TableCell>
+      <TableCell className=" !text-white">{user.username}</TableCell>
       <TableCell>
         <Link href={`/admin/${user.id}`}>
           <Button className="w-full" size="medium" variant="outlined">
@@ -40,14 +40,14 @@ export function UsersTable({
 }) {
   return (
     <div>
-      <Table>
+      <Table className="overflowY-auto ">
         <TableHead>
           <TableRow>
-            <TableCell className="max-w-[150px] text-white font-bold">
+            <TableCell className="max-w-[150px] !text-white font-bold">
               Name
             </TableCell>
-            <TableCell className="text-white font-bold">Email</TableCell>
-            <TableCell className="text-white font-bold">Username</TableCell>
+            <TableCell className="!text-white font-bold">Email</TableCell>
+            <TableCell className="!text-white font-bold">Username</TableCell>
             <TableCell /> {/* Empty cell, for other actions */}
           </TableRow>
         </TableHead>

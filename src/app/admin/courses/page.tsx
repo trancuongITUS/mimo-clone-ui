@@ -11,6 +11,7 @@ import DriveFileMoveOutlinedIcon from "@mui/icons-material/DriveFileMoveOutlined
 import Link from "next/link";
 import { CoursesAPI } from "@/api/courses";
 import toast from "react-hot-toast";
+import ProtectedAdminRouter from "@/components/ProtectedAdminRouter";
 
 const CreateCourses = () => {
   const [allCourses, setAllCourses] = useState<TCourse[]>([]);
@@ -45,78 +46,80 @@ const CreateCourses = () => {
 
   return (
     <>
-      <Layout>
-        <Space direction="vertical" size={"large"} style={{ width: "100%" }}>
-          <div className={"w-max ml-auto mr-6 mt-6"}>
-            <Button
-              className={"!text-base !px-3 !py-3"}
-              onClick={() => {
-                setOpeningCoursePath(null);
-                setOpenCreateCourseModal(true);
-              }}
+      <ProtectedAdminRouter>
+        <Layout>
+          <Space direction="vertical" size={"large"} style={{ width: "100%" }}>
+            <div className={"w-max ml-auto mr-6 mt-6"}>
+              <Button
+                className={"!text-base !px-3 !py-3"}
+                onClick={() => {
+                  setOpeningCoursePath(null);
+                  setOpenCreateCourseModal(true);
+                }}
+              >
+                Add Course
+              </Button>
+            </div>
+            <Space
+              direction="vertical"
+              style={{ width: "100%", paddingInline: 24 }}
             >
-              Add Course
-            </Button>
-          </div>
-          <Space
-            direction="vertical"
-            style={{ width: "100%", paddingInline: 24 }}
-          >
-            {allCourses.map((item) => (
-              <Collapse
-                collapsible="header"
-                expandIconPosition={"end"}
-                key={item.id}
-                items={[
-                  {
-                    key: "1",
-                    label: item.name,
-                    children: (
-                      <p>
-                        <strong>Description: </strong>
-                        {item.description}
-                      </p>
-                    ),
-                    extra: (
-                      <Space>
-                        <Tooltip title={"View courses"}>
-                          <Link href={`./courses/${item.id}/section`}>
+              {allCourses.map((item) => (
+                <Collapse
+                  collapsible="header"
+                  expandIconPosition={"end"}
+                  key={item.id}
+                  items={[
+                    {
+                      key: "1",
+                      label: item.name,
+                      children: (
+                        <p>
+                          <strong>Description: </strong>
+                          {item.description}
+                        </p>
+                      ),
+                      extra: (
+                        <Space>
+                          <Tooltip title={"View courses"}>
+                            <Link href={`./courses/${item.id}/section`}>
+                              <AntdButton
+                                type="text"
+                                icon={<DriveFileMoveOutlinedIcon />}
+                              ></AntdButton>
+                            </Link>
+                          </Tooltip>
+                          <Checkbox checked={item.isPublished}>
+                            Published
+                          </Checkbox>
+                          <Tooltip title={"Edit course path"}>
                             <AntdButton
                               type="text"
-                              icon={<DriveFileMoveOutlinedIcon />}
+                              icon={<SettingsOutlinedIcon />}
+                              onClick={() => {
+                                setOpeningCoursePath(item);
+                                setOpenCreateCourseModal(true);
+                              }}
                             ></AntdButton>
-                          </Link>
-                        </Tooltip>
-                        <Checkbox checked={item.isPublished}>
-                          Published
-                        </Checkbox>
-                        <Tooltip title={"Edit course path"}>
-                          <AntdButton
-                            type="text"
-                            icon={<SettingsOutlinedIcon />}
-                            onClick={() => {
-                              setOpeningCoursePath(item);
-                              setOpenCreateCourseModal(true);
-                            }}
-                          ></AntdButton>
-                        </Tooltip>
-                      </Space>
-                    ),
-                  },
-                ]}
-              />
-            ))}
+                          </Tooltip>
+                        </Space>
+                      ),
+                    },
+                  ]}
+                />
+              ))}
+            </Space>
           </Space>
-        </Space>
-      </Layout>
-      {openCreateCourseModal && (
-        <CreateCoursesPathModal
-          isOpen={openCreateCourseModal}
-          onClose={() => setOpenCreateCourseModal(false)}
-          defaultPath={openingCoursePath}
-          onOk={handleCreateCourse}
-        />
-      )}
+        </Layout>
+        {openCreateCourseModal && (
+          <CreateCoursesPathModal
+            isOpen={openCreateCourseModal}
+            onClose={() => setOpenCreateCourseModal(false)}
+            defaultPath={openingCoursePath}
+            onOk={handleCreateCourse}
+          />
+        )}
+      </ProtectedAdminRouter>
     </>
   );
 };

@@ -1,11 +1,12 @@
+import ProtectedAdminRouter from "@/components/ProtectedAdminRouter";
 import { Layout } from "@/components/admin/layout";
 
 export default function Setting() {
-    return (
-        <div>
-            <Layout>
-                A
-            </Layout>
-        </div>
-    )
+  return (
+    <ProtectedAdminRouter>
+      <div>
+        <Layout></Layout>
+      </div>
+    </ProtectedAdminRouter>
+  );
 }
