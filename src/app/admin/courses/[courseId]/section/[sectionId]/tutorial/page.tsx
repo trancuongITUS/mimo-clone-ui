@@ -3,7 +3,7 @@
 import { Layout } from "@/components/admin/layout";
 import Button from "@/components/styledComponents/Button";
 import { useParams } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CreateTutorialModal, { CodeLanguageOption } from "./CreateTutorialModal";
 import {
   Breadcrumb,
@@ -22,30 +22,7 @@ import {
 import DriveFileMoveOutlinedIcon from "@mui/icons-material/DriveFileMoveOutlined";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import Link from "next/link";
-
-const fakeData: TTutorial[] = [
-  {
-    id: "6602fd05a8fc89e974fa3f2c",
-    sectionId: "6602fd05a8fc89e974fa3f2b",
-    title: "Creating Variables",
-    descriptionContent:
-      "Create variables storing numbers, strings, and booleans",
-    index: 0,
-    type: TutorialType.COURSE,
-    codeLanguage: SupportedCodeLanguage.PYTHON,
-    bannerIconUrl: "",
-  },
-  {
-    id: "6602fd05a8fc89e974fa3f2c",
-    sectionId: "6602fd05a8fc89e974fa3f2b",
-    title: "Using Variables",
-    descriptionContent: "Learn how to update and reuse variables.",
-    index: 1,
-    type: TutorialType.COURSE,
-    codeLanguage: SupportedCodeLanguage.PYTHON,
-    bannerIconUrl: "",
-  },
-];
+import { TutorialAPI } from "@/api/tutorials";
 
 const FormatCodeLanguage = (value: SupportedCodeLanguage) => {
   const codeLanguageOption = CodeLanguageOption.find(
@@ -63,10 +40,22 @@ const FormatCodeLanguage = (value: SupportedCodeLanguage) => {
 };
 
 const Sections = () => {
-  const params = useParams<{ path_id: string; course_id: string }>();
+  const { sectionId, courseId } = useParams<{
+    sectionId: string;
+    courseId: string;
+  }>();
   const [openCreateCourseModal, setOpenCreateCourseModal] =
     useState<boolean>(false);
   const [openingSection, setOpeningSection] = useState<TTutorial>(null);
+  const [tutorials, setTutorials] = useState<TTutorial[]>([]);
+
+  useEffect(() => {
+    const fetchTutorials = async (sectionId) => {
+      const data = await TutorialAPI.getTutorialsBySectionId(sectionId);
+      setTutorials(data);
+    };
+    fetchTutorials(sectionId);
+  }, [sectionId]);
   return (
     <>
       <Layout>
@@ -76,10 +65,10 @@ const Sections = () => {
               <Breadcrumb
                 items={[
                   {
-                    title: <Tag color="red">{params?.path_id}</Tag>,
+                    title: <Tag color="red">{courseId}</Tag>,
                   },
                   {
-                    title: <Tag color="green">{params?.course_id}</Tag>,
+                    title: <Tag color="green">{sectionId}</Tag>,
                   },
                 ]}
               />
@@ -101,7 +90,7 @@ const Sections = () => {
           direction="vertical"
           style={{ width: "100%", paddingInline: 24 }}
         >
-          {fakeData.map((item) => (
+          {tutorials.map((item) => (
             <Collapse
               collapsible="header"
               expandIconPosition={"end"}
@@ -110,7 +99,16 @@ const Sections = () => {
               items={[
                 {
                   key: "1",
-                  label: item.title,
+                  label: (
+                    <div className="flex items-center">
+                      <p className="font-mimopro font-normal text-xs min-w-[24px] self-start leading-6 text-product2-content-secondary ">
+                        0{item.index + 1}
+                      </p>
+                      <p className="font-mimopro font-medium text-base text-product2-content-secondary">
+                        {item.title}
+                      </p>
+                    </div>
+                  ),
                   children: (
                     <>
                       <p>
@@ -129,7 +127,7 @@ const Sections = () => {
                   extra: (
                     <Space>
                       <Tooltip title={"View courses"}>
-                        <Link href={`./courses/${item.id}/sections`}>
+                        <Link href={`./tutorial/${item.id}/chapter`}>
                           <AntdButton
                             type="text"
                             icon={

@@ -2,35 +2,28 @@
 
 import { Layout } from "@/components/admin/layout";
 import Button from "@/components/styledComponents/Button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CreateCoursesPathModal from "./CreateCourseModal";
 import { Checkbox, Collapse, Space, Button as AntdButton, Tooltip } from "antd";
 import { TCourse } from "@/utils/types";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import DriveFileMoveOutlinedIcon from "@mui/icons-material/DriveFileMoveOutlined";
 import Link from "next/link";
-
-const fakeData: TCourse[] = [
-  {
-    id: "6602fd05a8fc89e974fa3f2a",
-    name: "Python",
-    description: "Learn the essentials of the fun, all-purpose language Python",
-    isPublished: true,
-    iconUrl: "",
-  },
-  {
-    id: "6602fd62666d4ea088040bd2",
-    name: "Javascript",
-    description: "",
-    isPublished: false,
-    iconUrl: "",
-  },
-];
+import { CoursesAPI } from "@/api/courses";
 
 const CreateCourses = () => {
+  const [allCourses, setAllCourses] = useState<TCourse[]>([]);
   const [openCreateCourseModal, setOpenCreateCourseModal] =
     useState<boolean>(false);
   const [openingCoursePath, setOpeningCoursePath] = useState<TCourse>(null);
+
+  useEffect(() => {
+    const fetchAllCoursesPath = async () => {
+      const res = await CoursesAPI.getAllCourses();
+      setAllCourses(res);
+    };
+    fetchAllCoursesPath();
+  }, []);
   return (
     <>
       <Layout>
@@ -50,7 +43,7 @@ const CreateCourses = () => {
             direction="vertical"
             style={{ width: "100%", paddingInline: 24 }}
           >
-            {fakeData.map((item) => (
+            {allCourses.map((item) => (
               <Collapse
                 collapsible="header"
                 expandIconPosition={"end"}
@@ -68,7 +61,7 @@ const CreateCourses = () => {
                     extra: (
                       <Space>
                         <Tooltip title={"View courses"}>
-                          <Link href={`./path/${item.id}/courses`}>
+                          <Link href={`./courses/${item.id}/section`}>
                             <AntdButton
                               type="text"
                               icon={<DriveFileMoveOutlinedIcon />}

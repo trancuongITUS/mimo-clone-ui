@@ -11,6 +11,9 @@ const antdToken: ThemeConfig = {
       contentBg: "#242746",
       headerBg: "#242746",
     },
+    Collapse: {
+      colorBgContainer: "#333661",
+    },
   },
   algorithm: theme.darkAlgorithm,
 };

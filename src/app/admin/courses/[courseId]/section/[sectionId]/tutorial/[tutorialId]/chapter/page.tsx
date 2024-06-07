@@ -8,10 +8,10 @@ import { Breadcrumb, Tag } from "antd";
 import CreateChapterModal from "./CreateChapterModal";
 
 const Lessons = () => {
-  const params = useParams<{
-    path_id: string;
-    course_id: string;
-    section_id: string;
+  const { courseId, sectionId, tutorialId } = useParams<{
+    courseId: string;
+    sectionId: string;
+    tutorialId: string;
   }>();
   const [openCreateCourseModal, setOpenCreateCourseModal] =
     useState<boolean>(false);
@@ -25,13 +25,13 @@ const Lessons = () => {
               <Breadcrumb
                 items={[
                   {
-                    title: <Tag color="red">{params?.path_id}</Tag>,
+                    title: <Tag color="red">{courseId}</Tag>,
                   },
                   {
-                    title: <Tag color="red">{params?.course_id}</Tag>,
+                    title: <Tag color="red">{sectionId}</Tag>,
                   },
                   {
-                    title: <Tag color="green">{params?.section_id}</Tag>,
+                    title: <Tag color="green">{tutorialId}</Tag>,
                   },
                 ]}
               />

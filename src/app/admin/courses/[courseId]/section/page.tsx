@@ -1,7 +1,7 @@
 "use client";
 
 import { Layout } from "@/components/admin/layout";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import Button from "@/components/styledComponents/Button";
 import CreateCoursesModal from "./CreateSectionModal";
@@ -10,31 +10,26 @@ import { Space, Tooltip, Button as AntdButton, Collapse, Checkbox } from "antd";
 import DriveFileMoveOutlinedIcon from "@mui/icons-material/DriveFileMoveOutlined";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import Link from "next/link";
-
-const fakeData: TSection[] = [
-  {
-    id: "6602fd05a8fc89e974fa3f2b",
-    courseId: "6602fd05a8fc89e974fa3f2a",
-    name: "Python Basics",
-    description: "Create variables storing numbers, strings, and booleans",
-    index: 0,
-    isBlocked: false,
-  },
-  {
-    id: "6602fd06a8fc89e974fa4560",
-    courseId: "6602fd05a8fc89e974fa3f2a",
-    name: "Types & Comparisons",
-    description: "Store the result of comparisons in variables",
-    index: 1,
-    isBlocked: false,
-  },
-];
+import { SectionAPI } from "@/api/section";
 
 const CreateCourse = () => {
-  const params = useParams<{ path_id: string }>();
+  const { courseId } = useParams<{ courseId: string }>();
+
+  const [sections, setSections] = useState<TSection[]>([]);
+
   const [openCreateCourseModal, setOpenCreateCourseModal] =
     useState<boolean>(false);
   const [openingCourse, setOpeningCourse] = useState<TSection>(null);
+
+  useEffect(() => {
+    const fetchSectionByCourseId = async (courseId: string) => {
+      const res = await SectionAPI.getSectionsByCourseID(courseId);
+      setSections(res);
+    };
+
+    if (courseId) fetchSectionByCourseId(courseId);
+  }, [courseId]);
+
   return (
     <>
       <Layout>
@@ -42,7 +37,7 @@ const CreateCourse = () => {
           <div className="p-6">
             <div className="flex items-center mb-8  justify-between">
               <h1 className="font-semibold text-lg md:text-2xl">
-                {params?.path_id} courses
+                {/* {params?.courseId} courses */}
               </h1>
               <div className="w-max">
                 <Button
@@ -61,7 +56,7 @@ const CreateCourse = () => {
             direction="vertical"
             style={{ width: "100%", paddingInline: 24 }}
           >
-            {fakeData.map((item) => (
+            {sections.map((item) => (
               <Collapse
                 collapsible="header"
                 expandIconPosition={"end"}
@@ -79,8 +74,8 @@ const CreateCourse = () => {
                     ),
                     extra: (
                       <Space>
-                        <Tooltip title={"View courses"}>
-                          <Link href={`./courses/${item.id}/sections`}>
+                        <Tooltip title={"View section"}>
+                          <Link href={`./section/${item.id}/tutorial`}>
                             <AntdButton
                               type="text"
                               icon={
