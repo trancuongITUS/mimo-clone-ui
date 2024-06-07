@@ -3,14 +3,14 @@
 import { Layout } from "@/components/admin/layout";
 import Button from "@/components/styledComponents/Button";
 import { useState } from "react";
-import CreateCoursesPathModal from "./CreateCoursePathModal";
+import CreateCoursesPathModal from "./CreateCourseModal";
 import { Checkbox, Collapse, Space, Button as AntdButton, Tooltip } from "antd";
-import { TCoursePath } from "@/utils/types";
+import { TCourse } from "@/utils/types";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import DriveFileMoveOutlinedIcon from "@mui/icons-material/DriveFileMoveOutlined";
 import Link from "next/link";
 
-const fakeData: TCoursePath[] = [
+const fakeData: TCourse[] = [
   {
     id: "6602fd05a8fc89e974fa3f2a",
     name: "Python",
@@ -30,7 +30,7 @@ const fakeData: TCoursePath[] = [
 const CreateCourses = () => {
   const [openCreateCourseModal, setOpenCreateCourseModal] =
     useState<boolean>(false);
-  const [openingCoursePath, setOpeningCoursePath] = useState<TCoursePath>(null);
+  const [openingCoursePath, setOpeningCoursePath] = useState<TCourse>(null);
   return (
     <>
       <Layout>

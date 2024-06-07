@@ -4,14 +4,14 @@ import { Layout } from "@/components/admin/layout";
 import { useState } from "react";
 import { useParams } from "next/navigation";
 import Button from "@/components/styledComponents/Button";
-import CreateCoursesModal from "./CreateCourseModal";
-import { TCourse } from "@/utils/types";
+import CreateCoursesModal from "./CreateSectionModal";
+import { TSection } from "@/utils/types";
 import { Space, Tooltip, Button as AntdButton, Collapse, Checkbox } from "antd";
 import DriveFileMoveOutlinedIcon from "@mui/icons-material/DriveFileMoveOutlined";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import Link from "next/link";
 
-const fakeData: TCourse[] = [
+const fakeData: TSection[] = [
   {
     id: "6602fd05a8fc89e974fa3f2b",
     courseId: "6602fd05a8fc89e974fa3f2a",
@@ -34,7 +34,7 @@ const CreateCourse = () => {
   const params = useParams<{ path_id: string }>();
   const [openCreateCourseModal, setOpenCreateCourseModal] =
     useState<boolean>(false);
-  const [openingCourse, setOpeningCourse] = useState<TCourse>(null);
+  const [openingCourse, setOpeningCourse] = useState<TSection>(null);
   return (
     <>
       <Layout>

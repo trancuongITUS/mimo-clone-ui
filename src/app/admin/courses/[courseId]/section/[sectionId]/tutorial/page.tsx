@@ -4,7 +4,7 @@ import { Layout } from "@/components/admin/layout";
 import Button from "@/components/styledComponents/Button";
 import { useParams } from "next/navigation";
 import { useState } from "react";
-import CreateSectionModal, { CodeLanguageOption } from "./CreateSectionModal";
+import CreateTutorialModal, { CodeLanguageOption } from "./CreateTutorialModal";
 import {
   Breadcrumb,
   Collapse,
@@ -13,12 +13,17 @@ import {
   Tag,
   Tooltip,
 } from "antd";
-import { SectionType, SupportedCodeLanguage, TSection } from "@/utils/types";
+import {
+  SupportedCodeLanguage,
+  TSection,
+  TTutorial,
+  TutorialType,
+} from "@/utils/types";
 import DriveFileMoveOutlinedIcon from "@mui/icons-material/DriveFileMoveOutlined";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import Link from "next/link";
 
-const fakeData: TSection[] = [
+const fakeData: TTutorial[] = [
   {
     id: "6602fd05a8fc89e974fa3f2c",
     sectionId: "6602fd05a8fc89e974fa3f2b",
@@ -26,7 +31,7 @@ const fakeData: TSection[] = [
     descriptionContent:
       "Create variables storing numbers, strings, and booleans",
     index: 0,
-    type: SectionType.COURSE,
+    type: TutorialType.COURSE,
     codeLanguage: SupportedCodeLanguage.PYTHON,
     bannerIconUrl: "",
   },
@@ -36,7 +41,7 @@ const fakeData: TSection[] = [
     title: "Using Variables",
     descriptionContent: "Learn how to update and reuse variables.",
     index: 1,
-    type: SectionType.COURSE,
+    type: TutorialType.COURSE,
     codeLanguage: SupportedCodeLanguage.PYTHON,
     bannerIconUrl: "",
   },
@@ -61,7 +66,7 @@ const Sections = () => {
   const params = useParams<{ path_id: string; course_id: string }>();
   const [openCreateCourseModal, setOpenCreateCourseModal] =
     useState<boolean>(false);
-  const [openingSection, setOpeningSection] = useState<TSection>(null);
+  const [openingSection, setOpeningSection] = useState<TTutorial>(null);
   return (
     <>
       <Layout>
@@ -152,7 +157,7 @@ const Sections = () => {
         </Space>
       </Layout>
       {openCreateCourseModal && (
-        <CreateSectionModal
+        <CreateTutorialModal
           isOpen={openCreateCourseModal}
           onClose={() => setOpenCreateCourseModal(false)}
           defaultSection={openingSection}

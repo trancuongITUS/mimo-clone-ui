@@ -5,7 +5,7 @@ import Button from "@/components/styledComponents/Button";
 import { useParams } from "next/navigation";
 import { useState } from "react";
 import { Breadcrumb, Tag } from "antd";
-import CreateLessonModal from "./CreateLessonModal";
+import CreateChapterModal from "./CreateChapterModal";
 
 const Lessons = () => {
   const params = useParams<{
@@ -50,7 +50,7 @@ const Lessons = () => {
         </div>
       </Layout>
       {openCreateCourseModal && (
-        <CreateLessonModal
+        <CreateChapterModal
           isOpen={openCreateCourseModal}
           onClose={() => setOpenCreateCourseModal(false)}
         />

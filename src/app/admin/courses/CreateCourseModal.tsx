@@ -7,19 +7,19 @@ import { useState } from "react";
 type Props = {
   isOpen: boolean;
   onClose: () => void;
-  defaultCourse?: TCourse;
+  defaultPath?: TCourse;
 };
 
-const CreateCoursesModal = ({ isOpen, onClose, defaultCourse }: Props) => {
-  const [name, setName] = useState<string>(defaultCourse?.name || "");
+const CreateCoursesPathModal = ({ isOpen, onClose, defaultPath }: Props) => {
+  const [name, setName] = useState<string>(defaultPath?.name || "");
   const [description, setDescription] = useState<string>(
-    defaultCourse?.description || ""
+    defaultPath?.description || ""
   );
 
   return (
     <Modal
       open={isOpen}
-      title={"Create Course"}
+      title={"Create Courses"}
       onCancel={onClose}
       okText={"Create"}
       okButtonProps={{ style: { backgroundColor: "#885bde" } }}
@@ -27,7 +27,7 @@ const CreateCoursesModal = ({ isOpen, onClose, defaultCourse }: Props) => {
       <div className="flex flex-1 flex-col gap-6 mt-6">
         <div>
           <Input
-            label="Course name"
+            label="Course Path name"
             value={name}
             onChange={(e) => setName(e.currentTarget.value)}
           />
@@ -45,4 +45,4 @@ const CreateCoursesModal = ({ isOpen, onClose, defaultCourse }: Props) => {
   );
 };
 
-export default CreateCoursesModal;
+export default CreateCoursesPathModal;

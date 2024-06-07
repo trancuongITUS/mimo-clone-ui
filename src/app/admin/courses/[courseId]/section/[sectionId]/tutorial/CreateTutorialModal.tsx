@@ -2,14 +2,14 @@ import Input from "@/components/styledComponents/Input";
 import Image from "next/image";
 import Textarea from "@/components/styledComponents/TextArea";
 import { Modal, Select, Space } from "antd";
-import styles from "./CreateSelectionModal.module.css";
-import { SectionType, SupportedCodeLanguage, TSection } from "@/utils/types";
+import styles from "./CreateTutorialModal.module.css";
+import { TutorialType, SupportedCodeLanguage, TTutorial } from "@/utils/types";
 import { useState } from "react";
 
 type Props = {
   isOpen: boolean;
   onClose: () => void;
-  defaultSection?: TSection;
+  defaultSection?: TTutorial;
 };
 
 type TCodeLanguageOption = {
@@ -82,8 +82,8 @@ const CreateSectionModal = ({ isOpen, onClose, defaultSection }: Props) => {
   const [codeLanguage, setCodeLanguage] = useState<SupportedCodeLanguage>(
     defaultSection?.codeLanguage || SupportedCodeLanguage.PYTHON
   );
-  const [sectionType, setSectionType] = useState<SectionType>(
-    defaultSection?.type || SectionType.COURSE
+  const [sectionType, setSectionType] = useState<TutorialType>(
+    defaultSection?.type || TutorialType.COURSE
   );
 
   return (

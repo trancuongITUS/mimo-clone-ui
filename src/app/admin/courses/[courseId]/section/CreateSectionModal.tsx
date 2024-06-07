@@ -1,25 +1,25 @@
 import Input from "@/components/styledComponents/Input";
 import Textarea from "@/components/styledComponents/TextArea";
-import { TCoursePath } from "@/utils/types";
+import { TSection } from "@/utils/types";
 import { Modal } from "antd";
 import { useState } from "react";
 
 type Props = {
   isOpen: boolean;
   onClose: () => void;
-  defaultPath?: TCoursePath;
+  defaultCourse?: TSection;
 };
 
-const CreateCoursesPathModal = ({ isOpen, onClose, defaultPath }: Props) => {
-  const [name, setName] = useState<string>(defaultPath?.name || "");
+const CreateCoursesModal = ({ isOpen, onClose, defaultCourse }: Props) => {
+  const [name, setName] = useState<string>(defaultCourse?.name || "");
   const [description, setDescription] = useState<string>(
-    defaultPath?.description || ""
+    defaultCourse?.description || ""
   );
 
   return (
     <Modal
       open={isOpen}
-      title={"Create Courses"}
+      title={"Create Course"}
       onCancel={onClose}
       okText={"Create"}
       okButtonProps={{ style: { backgroundColor: "#885bde" } }}
@@ -27,7 +27,7 @@ const CreateCoursesPathModal = ({ isOpen, onClose, defaultPath }: Props) => {
       <div className="flex flex-1 flex-col gap-6 mt-6">
         <div>
           <Input
-            label="Course Path name"
+            label="Course name"
             value={name}
             onChange={(e) => setName(e.currentTarget.value)}
           />
@@ -45,4 +45,4 @@ const CreateCoursesPathModal = ({ isOpen, onClose, defaultPath }: Props) => {
   );
 };
 
-export default CreateCoursesPathModal;
+export default CreateCoursesModal;
