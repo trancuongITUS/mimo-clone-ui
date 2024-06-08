@@ -24,6 +24,9 @@ import eventEmitter, { EMIT_EVENT } from "@/utils/eventEmitter";
 import AnswerGuide, {
   AnswerGuideMode,
 } from "@/components/PostInteractionModule";
+import { TutorialAPI } from "@/api/tutorials";
+import { SectionAPI } from "@/api/section";
+import { TraceCourseAPI } from "@/api/traceCourses";
 
 const UserPopoverContent = () => {
   const router = useRouter();
@@ -118,8 +121,56 @@ enum BOTTOM_BUTTON_MODE {
   SUBMIT,
 }
 
+const handleUpdateTraceCourse = async (
+  tutorialId: string,
+  sectionId: string,
+  courseId: string,
+  chapterId: string
+) => {
+  const tutorials = await TutorialAPI.getTutorialsBySectionId(sectionId);
+
+  const chapters = await ChapterAPI.getChaptersByTutorialId(tutorialId);
+
+  const courseTrace = await TraceCourseAPI.getTraceCourse(courseId);
+  const currentSection = await SectionAPI.getSectionById(sectionId);
+
+  let [doingSectionIndex, doingTutorialIndex, doingChapterIndex] =
+    courseTrace.key.split("-").map((item) => Number(item) || 0);
+
+  if (
+    chapters.find((item) => item.id === chapterId)?.index !==
+      doingChapterIndex ||
+    tutorials.find((item) => item.id === tutorialId)?.index !==
+      doingTutorialIndex ||
+    currentSection.index !== doingSectionIndex
+  ) {
+    return;
+  }
+
+  doingChapterIndex += 1;
+  if (doingChapterIndex >= chapters.length) {
+    doingChapterIndex = 0;
+    doingTutorialIndex += 1;
+  }
+  if (doingTutorialIndex >= tutorials.length) {
+    doingTutorialIndex = 0;
+    doingSectionIndex += 1;
+  }
+
+  const newCourseTrace = [
+    doingSectionIndex,
+    doingTutorialIndex,
+    doingChapterIndex,
+  ].join("-");
+
+  await TraceCourseAPI.updateTraceCourse({
+    ...courseTrace,
+    key: newCourseTrace,
+  });
+};
+
 const ChapterPage = () => {
-  const { chapterId } = useParams<{
+  const { courseId, sectionId, tutorialId, chapterId } = useParams<{
     courseId: string;
     sectionId: string;
     tutorialId: string;
@@ -176,10 +227,11 @@ const ChapterPage = () => {
     window.history.pushState(null, "", "?" + updatedSearchParams.toString());
   };
 
-  const handleMoveNextLesson = () => {
+  const handleMoveNextLesson = async () => {
     const nextIndex = Number(lesson) + 1;
 
     if (nextIndex >= currentChapter?.lessons.length || 0) {
+      await handleUpdateTraceCourse(tutorialId, sectionId, courseId, chapterId);
       router.push("/user-page");
       return;
     }
@@ -223,7 +275,10 @@ const ChapterPage = () => {
       <div className="h-screen flex flex-col">
         <div className="z-[31] flex h-12 flex-shrink-0 items-center space-x-4 bg-product2-background-secondary pr-2 text-product-text-secondary-dark">
           <div className="flex h-full flex-1 items-center pl-2">
-            <button className="mr-4 flex h-8 w-8 items-center justify-center rounded-lg text-product-button-text-enabled-dark hover:bg-product2-background-tertiary ">
+            <button
+              className="mr-4 flex h-8 w-8 items-center justify-center rounded-lg text-product-button-text-enabled-dark hover:bg-product2-background-tertiary "
+              onClick={() => router.push("/user-page")}
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 height="100%"
