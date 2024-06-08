@@ -20,6 +20,7 @@ const ChapterPage = () => {
     };
     fetchChapterList(tutorialId);
   }, []);
+
   return (
     <ProtectedRouter>
       <></>

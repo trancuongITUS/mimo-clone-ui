@@ -1,7 +1,10 @@
 /* eslint-disable @next/next/no-img-element */
 import { CoursesAPI } from "@/api/courses";
 import { SectionAPI } from "@/api/section";
-import { TCourse, TSection } from "@/utils/types";
+import { TraceCourseAPI } from "@/api/traceCourses";
+import { DoingSectionStatus } from "@/components/DoingSectionStatus";
+import { FinishStatus } from "@/utils/constant";
+import { TCourse, TSection, TUserCourseTrace } from "@/utils/types";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -21,6 +24,8 @@ const SideBar = () => {
   const [sections, setSections] = useState<TSection[]>([]);
   const [mode, setMode] = useState<MODE>(MODE.COURSE);
   const [pickedCourse, setPickedCourse] = useState<TCourse>(null);
+  const [traceCoursesData, setTraceCoursesData] =
+    useState<TUserCourseTrace>(null);
 
   useEffect(() => {
     const fetchAllCoursesPath = async () => {
@@ -42,6 +47,35 @@ const SideBar = () => {
 
     if (pickedCourse) fetchSectionByCourseId(pickedCourse.id);
   }, [pickedCourse]);
+
+  useEffect(() => {
+    if (!pickedCourse) return;
+    const fetchTraceCourse = async (courseId: string) => {
+      let data = await TraceCourseAPI.getTraceCourse(courseId);
+      if (!data) {
+        data = await TraceCourseAPI.createTraceCourse({
+          key: "0-0-0",
+          isFavourite: false,
+          courseId,
+        });
+      }
+
+      setTraceCoursesData(data);
+    };
+    fetchTraceCourse(pickedCourse.id);
+  }, [pickedCourse]);
+
+  const getSectionFinishStatus = (section: TSection): FinishStatus => {
+    const currentTraceSection = Number(
+      traceCoursesData?.key.split("-")[0] || 0
+    );
+
+    if (section?.index < currentTraceSection) return FinishStatus.FINISHED;
+
+    if (section.index === currentTraceSection) return FinishStatus.DOING;
+
+    return FinishStatus.BLOCKING;
+  };
 
   return (
     <div className="border-r border-product2-border-secondary min-h-full flex flex-col items-start space-y-3 p-2 w-[400px] border-t">
@@ -161,6 +195,34 @@ const SideBar = () => {
                   </p>
                 </div>
               </div>
+              {getSectionFinishStatus(item) === FinishStatus.FINISHED ? (
+                <div className="flex h-6 w-6 items-center justify-center rounded-full bg-product2-purple-300">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    height="100%"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    className="h-4 w-4 text-product2-content-inverse"
+                  >
+                    <path
+                      stroke="currentColor"
+                      stroke-linecap="square"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M19.905 6.405 9 17.302l-4.177-4.177"
+                    ></path>
+                  </svg>
+                </div>
+              ) : (
+                <DoingSectionStatus
+                  doingSection={
+                    Number(traceCoursesData?.key.split("-")[0]) === item.index
+                      ? Number(traceCoursesData?.key.split("-")[1]) || 0
+                      : 0
+                  }
+                  sectionId={item.id}
+                ></DoingSectionStatus>
+              )}
             </div>
           ))}
         </div>
