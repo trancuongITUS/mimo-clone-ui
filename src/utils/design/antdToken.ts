@@ -5,11 +5,15 @@ const antdToken: ThemeConfig = {
     colorPrimary: "#885bde",
     colorBgContainer: "rgb(141 96 226)",
     colorBgElevated: "#333661",
+    colorSplit: "rgb(74 77 133)",
   },
   components: {
     Modal: {
       contentBg: "#242746",
       headerBg: "#242746",
+    },
+    Collapse: {
+      colorBgContainer: "#333661",
     },
   },
   algorithm: theme.darkAlgorithm,

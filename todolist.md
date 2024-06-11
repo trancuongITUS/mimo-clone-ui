@@ -1,0 +1,4 @@
+- Ask for database (or use generated database).
+- Ask for detailed admin's feature (on user).
+- Ask for role check.
+- Do the page changing.

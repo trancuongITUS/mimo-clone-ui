@@ -11,7 +11,12 @@ const getSectionById = async (id: string): Promise<TSection> => {
   return res.data.data;
 };
 
+const createSection = async (payload: Partial<TSection>): Promise<TSection> => {
+  const res = await configuredAxios.post("/sections", payload);
+  return res.data.data;
+};
 export const SectionAPI = {
   getSectionsByCourseID,
   getSectionById,
+  createSection,
 };

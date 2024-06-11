@@ -1,9 +1,13 @@
 "use client";
 import { SectionAPI } from "@/api/section";
+import { TraceCourseAPI } from "@/api/traceCourses";
 import { TutorialAPI } from "@/api/tutorials";
+import DoingTutorialStatus from "@/components/DoingTutorialStatus";
 import ProtectedRouter from "@/components/ProtectedRouter";
 import Layout from "@/components/common/layout";
-import { TSection, TTutorial } from "@/utils/types";
+import { FinishStatus } from "@/utils/constant";
+import { TSection, TTutorial, TUserCourseTrace } from "@/utils/types";
+import { Tooltip } from "antd";
 import { useParams, usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -17,6 +21,8 @@ export default function SectionPage() {
 
   const [currentSection, setCurrentSection] = useState<TSection>(null);
   const [tutorials, setTutorials] = useState<TTutorial[]>([]);
+  const [traceCoursesData, setTraceCoursesData] =
+    useState<TUserCourseTrace>(null);
 
   useEffect(() => {
     const fetchTutorials = async (sectionId) => {
@@ -34,6 +40,39 @@ export default function SectionPage() {
 
     fetchCurrentSection(sectionId);
   }, []);
+
+  useEffect(() => {
+    const fetchTraceCourse = async (courseId: string) => {
+      let data = await TraceCourseAPI.getTraceCourse(courseId);
+      if (!data) {
+        data = await TraceCourseAPI.createTraceCourse({
+          key: "0-0-0",
+          isFavourite: false,
+          courseId,
+        });
+      }
+
+      setTraceCoursesData(data);
+    };
+    fetchTraceCourse(courseId);
+  }, [courseId]);
+
+  const getTutorialFinishStatus = (tutorial: TTutorial): FinishStatus => {
+    const currentTraceSection = Number(
+      traceCoursesData?.key.split("-")[0] || 0
+    );
+    if (currentSection?.index < currentTraceSection)
+      return FinishStatus.FINISHED;
+
+    if (currentSection?.index > currentTraceSection) return FinishStatus.BLOCKING;
+    const currentTraceTutorial =
+      Number(traceCoursesData?.key.split("-")[1]) || 0;
+
+    if (tutorial.index < currentTraceTutorial) return FinishStatus.FINISHED;
+
+    if (tutorial.index === currentTraceTutorial) return FinishStatus.DOING;
+    else return FinishStatus.BLOCKING;
+  };
 
   return (
     <ProtectedRouter>
@@ -63,22 +102,72 @@ export default function SectionPage() {
                 {tutorials
                   .sort((a, b) => a.index - b.index)
                   .map((item) => (
-                    <div
-                      key={item.id}
-                      className="z-10 flex w-full items-center justify-between space-x-2 rounded-xl border border-product2-border-secondary bg-product2-background-primary p-3 cursor-pointer hover:bg-[#4a4d85]"
-                      onClick={() => {
-                        router.push(pathname + `/tutorial/${item.id}`);
-                      }}
-                    >
-                      <div className="flex items-center">
-                        <p className="font-mimopro font-normal text-xs min-w-[24px] self-start leading-6 text-product2-content-secondary ">
-                          0{item.index + 1}
-                        </p>
-                        <p className="font-mimopro font-medium text-base text-product2-content-secondary">
-                          {item.title}
-                        </p>
-                      </div>
-                    </div>
+                    <>
+                      {getTutorialFinishStatus(item) ===
+                      FinishStatus.BLOCKING ? (
+                        <Tooltip
+                          title={"Finish the previous tutorial to unlock"}
+                        >
+                          <div
+                            key={item.id}
+                            className="z-10 flex w-full items-center justify-between space-x-2 rounded-xl border border-product2-border-secondary bg-product2-background-primary p-3 cursor-not-allowed hover:bg-[#4a4d85]"
+                          >
+                            <div className="flex items-center">
+                              <p className="font-mimopro font-normal text-xs min-w-[24px] self-start leading-6 text-product2-content-secondary ">
+                                0{item.index + 1}
+                              </p>
+                              <p className="font-mimopro font-medium text-base text-product2-content-secondary">
+                                {item.title}
+                              </p>
+                            </div>
+                          </div>
+                        </Tooltip>
+                      ) : (
+                        <div
+                          key={item.id}
+                          className="z-10 flex w-full items-center justify-between space-x-2 rounded-xl border border-product2-border-secondary bg-product2-background-primary p-3 cursor-pointer hover:bg-[#4a4d85]"
+                          onClick={() => {
+                            router.push(pathname + `/tutorial/${item.id}`);
+                          }}
+                        >
+                          <div className="flex items-center">
+                            <p className="font-mimopro font-normal text-xs min-w-[24px] self-start leading-6 text-product2-content-secondary ">
+                              0{item.index + 1}
+                            </p>
+                            <p className="font-mimopro font-medium text-base text-product2-content-secondary">
+                              {item.title}
+                            </p>
+                          </div>
+                          {getTutorialFinishStatus(item) ===
+                          FinishStatus.FINISHED ? (
+                            <div className="flex h-6 w-6 items-center justify-center rounded-full bg-product2-purple-300">
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                height="100%"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                className="h-4 w-4 text-product2-content-inverse"
+                              >
+                                <path
+                                  stroke="currentColor"
+                                  stroke-linecap="square"
+                                  stroke-linejoin="round"
+                                  stroke-width="2"
+                                  d="M19.905 6.405 9 17.302l-4.177-4.177"
+                                ></path>
+                              </svg>
+                            </div>
+                          ) : (
+                            <DoingTutorialStatus
+                              doingChapter={
+                                Number(traceCoursesData?.key.split("-")[2]) || 0
+                              }
+                              tutorial={item}
+                            />
+                          )}
+                        </div>
+                      )}
+                    </>
                   ))}
               </div>
             </div>

@@ -11,7 +11,7 @@ export function GoogleLoginButton() {
       className={styles["btn-other"]}
       onClick={async () => {
         await handleGoogleLogin();
-        router.push("/suggest-courses");
+        router.push("/user-page");
       }}
     >
       <svg

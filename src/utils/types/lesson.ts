@@ -9,6 +9,7 @@ export type TInteractionModuleItem = {
   id: string;
   text: string;
   value: number;
+  interactionModuleId: string;
 };
 export type TModuleFileType = {
   codeLanguage: SupportedCodeLanguage;
@@ -16,6 +17,8 @@ export type TModuleFileType = {
   id: string;
   isInteractive: boolean;
   name: string;
+  interactionModuleId?: string;
+  preInteractionModuleId?: string;
 };
 export type TInteractionOption = {
   correct: boolean;
@@ -26,6 +29,7 @@ export type TInteractionOption = {
   startLine: number;
   startPos: number;
   value: string;
+  interactionModuleId: string;
 };
 export type TInteractionModule = {
   id: string;
@@ -36,6 +40,7 @@ export type TInteractionModule = {
   output: string;
   type: InteractionModuleType;
   wrongOptions: string;
+  lessonId: string;
 };
 /* ------------------------------------------------ */
 export enum PrePostInteractionModuleVisibleIf {
@@ -58,6 +63,7 @@ export type TPrePostInteractionModule = {
   contentType: PrePostInteractionModuleContentType;
   type: PrePostInteractionModuleType;
   files: TModuleFileType[];
+  lessonId: string;
 };
 /* ------------------------------------------------ */
 export enum LessonType {
@@ -69,4 +75,5 @@ export type TLesson = {
   type: LessonType;
   interactionModules: TInteractionModule[];
   prePostInteractionModules: TPrePostInteractionModule[];
+  chapterId: string;
 };

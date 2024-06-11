@@ -6,4 +6,5 @@ export type TChapter = {
   title: string;
   type: string;
   lessons: TLesson[];
+  tutorialId: string;
 };
