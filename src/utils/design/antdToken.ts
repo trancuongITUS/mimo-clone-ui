@@ -5,6 +5,7 @@ const antdToken: ThemeConfig = {
     colorPrimary: "#885bde",
     colorBgContainer: "rgb(141 96 226)",
     colorBgElevated: "#333661",
+    colorSplit: "rgb(74 77 133)",
   },
   components: {
     Modal: {

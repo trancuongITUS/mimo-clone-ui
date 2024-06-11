@@ -85,20 +85,8 @@ const Sections = () => {
   return (
     <>
       <Layout>
-        <div className="p-6">
-          <div className="flex items-center mb-8  justify-between">
-            <h1 className="font-semibold text-lg md:text-2xl">
-              <Breadcrumb
-                items={[
-                  {
-                    title: <Tag color="red">{courseId}</Tag>,
-                  },
-                  {
-                    title: <Tag color="green">{sectionId}</Tag>,
-                  },
-                ]}
-              />
-            </h1>
+        <div className="p-6 w-full">
+          <div className="flex items-center mb-8 w-full  justify-end">
             <div className="w-max">
               <Button
                 className={"!text-base !px-3 !py-3"}

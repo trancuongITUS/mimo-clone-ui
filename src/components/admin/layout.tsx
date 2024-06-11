@@ -55,7 +55,9 @@ export function Layout({ children }: any) {
               </svg>
             )}
           </div>
-          {children}
+          <div className="border-product2-border-secondary border-t w-full h-full">
+            {children}
+          </div>
         </div>
       </div>
     </>

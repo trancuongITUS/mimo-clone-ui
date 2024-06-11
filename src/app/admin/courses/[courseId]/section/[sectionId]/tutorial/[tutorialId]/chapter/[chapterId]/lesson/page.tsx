@@ -1,64 +1,63 @@
 "use client";
 
+import { ChapterAPI } from "@/api/chapters";
+import _ from "lodash";
+import ProtectedAdminRouter from "@/components/ProtectedAdminRouter";
 import { Layout } from "@/components/admin/layout";
 import Button from "@/components/styledComponents/Button";
-import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
-import {
-  Breadcrumb,
-  Collapse,
-  Space,
-  Tag,
-  Tooltip,
-  Button as AntdButton,
-} from "antd";
-import CreateChapterModal from "./CreateChapterModal";
-import { TChapter } from "@/utils/types";
-import { ChapterAPI } from "@/api/chapters";
+import { LessonType, TLesson } from "@/utils/types";
+import { Collapse, Space, Tooltip, Button as AntdButton } from "antd";
 import Link from "next/link";
+import { useParams } from "next/navigation";
+import React, { useEffect, useState } from "react";
+
 import DriveFileMoveOutlinedIcon from "@mui/icons-material/DriveFileMoveOutlined";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
-import toast from "react-hot-toast";
+import CreateLessonModal from "./CreateLessonModal";
+import { LessonAPI } from "@/api/lesson";
+import eventEmitter, { EMIT_EVENT } from "@/utils/eventEmitter";
 
-const Lessons = () => {
-  const { courseId, sectionId, tutorialId } = useParams<{
+const Lesson = () => {
+  const { courseId, sectionId, tutorialId, chapterId } = useParams<{
     courseId: string;
     sectionId: string;
     tutorialId: string;
+    chapterId: string;
   }>();
-  const [openCreateCourseModal, setOpenCreateCourseModal] =
+
+  const [lessons, setLessons] = useState<TLesson[]>([]);
+
+  const [openCreateEditModal, setOpenCreateEditModal] =
     useState<boolean>(false);
-  const [chapters, setChapters] = useState<TChapter[]>([]);
-  const [openingChapter, setOpeningChapter] = useState<TChapter>(null);
 
   useEffect(() => {
-    const fetchChapters = async () => {
-      const res = await ChapterAPI.getChaptersByTutorialId(tutorialId);
-      setChapters(res);
+    const fetchLesson = async (chapterId) => {
+      const res = await ChapterAPI.getChaptersById(chapterId);
+      setLessons(res.lessons);
     };
 
-    fetchChapters();
+    fetchLesson(chapterId);
   }, []);
 
-  const handleCreateSection = async ({ title }) => {
+  const handleCreateLesson = async () => {
     try {
-      const data = await ChapterAPI.createChapter({
-        title,
-        index: chapters.length,
-        lessons: [],
-        tutorialId,
+      const res = await LessonAPI.createLesson({
+        chapterId,
+        type: LessonType.INTERACTIVE,
+        index: lessons.length,
       });
-      setChapters((prev) => [...prev, data]);
-      toast.success("Create section success");
+      console.log("🚀 ~ handleCreateLesson ~ res:", res);
+
+      setLessons((prev) => [...prev, res]);
+      setOpenCreateEditModal(false);
+      eventEmitter.emit(EMIT_EVENT.CREATE_LESSON, { id: res.id });
     } catch (err) {
-      toast.error("Create section fail ! ");
-    } finally {
-      setOpenCreateCourseModal(false);
+      console.log("🚀 ~ handleCreateLesson ~ err:", err);
     }
   };
 
   return (
-    <>
+    <ProtectedAdminRouter>
       <Layout>
         <div className="p-6 w-full">
           <div className="flex items-center mb-8 w-full  justify-end">
@@ -66,21 +65,18 @@ const Lessons = () => {
             <div className="w-max">
               <Button
                 className={"!text-base !px-3 !py-3 !w-max"}
-                onClick={() => {
-                  setOpenCreateCourseModal(true);
-                }}
+                onClick={() => setOpenCreateEditModal(true)}
               >
-                Add Chapter
+                Add Lesson
               </Button>
             </div>
           </div>
         </div>
-
         <Space
           direction="vertical"
           style={{ width: "100%", paddingInline: 24 }}
         >
-          {chapters.map((item) => (
+          {_.orderBy(lessons, (o) => o.index).map((item) => (
             <Collapse
               collapsible="header"
               expandIconPosition={"end"}
@@ -93,9 +89,6 @@ const Lessons = () => {
                     <div className="flex items-center">
                       <p className="font-mimopro font-normal text-xs min-w-[24px] self-start leading-6 text-product2-content-secondary ">
                         0{item.index + 1}
-                      </p>
-                      <p className="font-mimopro font-medium text-base text-product2-content-secondary">
-                        {item.title}
                       </p>
                     </div>
                   ),
@@ -122,10 +115,7 @@ const Lessons = () => {
                         <AntdButton
                           type="text"
                           icon={<SettingsOutlinedIcon fontSize="small" />}
-                          onClick={() => {
-                            setOpeningChapter(item);
-                            setOpenCreateCourseModal(true);
-                          }}
+                          onClick={() => {}}
                         ></AntdButton>
                       </Tooltip>
                     </Space>
@@ -136,15 +126,15 @@ const Lessons = () => {
           ))}
         </Space>
       </Layout>
-      {openCreateCourseModal && (
-        <CreateChapterModal
-          isOpen={openCreateCourseModal}
-          onClose={() => setOpenCreateCourseModal(false)}
-          onOk={handleCreateSection}
-        />
-      )}
-    </>
+      <CreateLessonModal
+        isOpen={openCreateEditModal}
+        onClose={() => {
+          setOpenCreateEditModal(false);
+        }}
+        onOk={handleCreateLesson}
+      />
+    </ProtectedAdminRouter>
   );
 };
 
-export default Lessons;
+export default Lesson;

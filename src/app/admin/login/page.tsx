@@ -23,7 +23,7 @@ export default function Login() {
           if (user?.role !== UserRole.ADMIN) {
             toast.error("You are not an admin");
           }
-          router.push("/admin");
+          router.push("/admin/courses");
         });
       })
       .catch((error) => {

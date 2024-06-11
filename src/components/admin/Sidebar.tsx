@@ -10,8 +10,8 @@ type TMenuItem = {
 };
 
 const MenuItems: TMenuItem[] = [
-  { label: "User", url: "/admin" },
   { label: "Courses", url: "/admin/courses" },
+  { label: "User", url: "/admin" },
 ];
 
 const Sidebar = () => {
@@ -20,7 +20,7 @@ const Sidebar = () => {
     const sortItem = _.sortBy(MenuItems, (a) => -a.url.length);
     return sortItem.find((item) => pathname?.startsWith(item.url));
   };
-  console.log("🚀 ~ findPickedUrl ~ findPickedUrl:", findPickedUrl());
+
   return (
     <div className="border-r border-product2-border-secondary min-h-full flex flex-col items-start space-y-3 p-6 w-[300px] border-t">
       {MenuItems.map((item) => (
