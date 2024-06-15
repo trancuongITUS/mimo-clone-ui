@@ -29,28 +29,33 @@ const Lesson = () => {
 
   const [openCreateEditModal, setOpenCreateEditModal] =
     useState<boolean>(false);
+  const [editingLesson, setEditingLesson] = useState<TLesson>(null);
+
+  const fetchLesson = async (chapterId) => {
+    const res = await ChapterAPI.getChaptersById(chapterId);
+    setLessons(res.lessons);
+  };
 
   useEffect(() => {
-    const fetchLesson = async (chapterId) => {
-      const res = await ChapterAPI.getChaptersById(chapterId);
-      setLessons(res.lessons);
-    };
-
     fetchLesson(chapterId);
   }, []);
 
   const handleCreateLesson = async () => {
     try {
+      if (editingLesson) {
+        await LessonAPI.deleteLesson(editingLesson.id);
+      }
       const res = await LessonAPI.createLesson({
         chapterId,
         type: LessonType.INTERACTIVE,
-        index: lessons.length,
+        index: editingLesson ? editingLesson.index : lessons.length,
       });
-      console.log("🚀 ~ handleCreateLesson ~ res:", res);
 
       setLessons((prev) => [...prev, res]);
+      setEditingLesson(null);
       setOpenCreateEditModal(false);
       eventEmitter.emit(EMIT_EVENT.CREATE_LESSON, { id: res.id });
+      fetchLesson(chapterId);
     } catch (err) {
       console.log("🚀 ~ handleCreateLesson ~ err:", err);
     }
@@ -111,11 +116,16 @@ const Lesson = () => {
                           ></AntdButton>
                         </Link>
                       </Tooltip>
-                      <Tooltip title={"Edit course path"}>
+                      <Tooltip title={"Edit lesson"}>
                         <AntdButton
                           type="text"
                           icon={<SettingsOutlinedIcon fontSize="small" />}
-                          onClick={() => {}}
+                          onClick={() => {
+                            console.log("🚀 ~ Lesson ~ item:", item);
+
+                            setEditingLesson(item);
+                            setOpenCreateEditModal(true);
+                          }}
                         ></AntdButton>
                       </Tooltip>
                     </Space>
@@ -130,7 +140,9 @@ const Lesson = () => {
         isOpen={openCreateEditModal}
         onClose={() => {
           setOpenCreateEditModal(false);
+          setEditingLesson(null);
         }}
+        defaultValue={editingLesson}
         onOk={handleCreateLesson}
       />
     </ProtectedAdminRouter>

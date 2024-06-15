@@ -33,6 +33,7 @@ const InputContentMultipleChoice = ({ defaultVale, onChange }: Props) => {
       <div>
         <Checkbox
           value={isCorrect}
+          defaultChecked={defaultVale?.correct}
           onChange={(e) => setIsCorrect(e.target.checked)}
         >
           Correct ?

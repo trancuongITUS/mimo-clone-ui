@@ -4,6 +4,7 @@ import styles from "./index.module.css";
 import {
   InteractionModuleType,
   SupportedCodeLanguage,
+  TInteractionModule,
   TInteractionOption,
 } from "@/utils/types";
 import Input from "@/components/styledComponents/Input";
@@ -62,19 +63,47 @@ const generateNewChoiceContent = (): TInputContentMultipleChoice => ({
   correct: false,
 });
 
-const InteractModule = () => {
+type Props = {
+  defaultValue?: TInteractionModule;
+};
+
+const mapDefaultValueToChoiceContent = (
+  input: TInteractionModule
+): TInputContentMultipleChoice[] => {
+  if (input?.type === InteractionModuleType.MULTIPLE_CHOICE) {
+    return input.items.map((item) => ({
+      id: item.id,
+      content: item.text,
+      correct: item.correct,
+    }));
+  }
+};
+
+const InteractModule = ({ defaultValue }: Props) => {
   const [type, setType] = useState<InteractionModuleType>(
-    InteractionModuleType.MULTIPLE_CHOICE
+    defaultValue?.type ?? InteractionModuleType.MULTIPLE_CHOICE
   );
   const [codeLanguage, setCodeLanguage] = useState<SupportedCodeLanguage>(
-    SupportedCodeLanguage.PYTHON
+    defaultValue?.type === InteractionModuleType.MULTIPLE_CHOICE
+      ? SupportedCodeLanguage.PYTHON
+      : defaultValue?.files[0].codeLanguage
   );
   const [multipleChoiceContentList, setMultipleChoiceContentList] = useState<
     TInputContentMultipleChoice[]
-  >([generateNewChoiceContent()]);
+  >(
+    mapDefaultValueToChoiceContent(defaultValue) ?? [generateNewChoiceContent()]
+  );
 
-  const [codeContent, setCodeContent] = useState<string>("");
-  const [fileName, setFileName] = useState<string>("");
+  const [codeContent, setCodeContent] = useState<string>(
+    defaultValue?.type !== InteractionModuleType.MULTIPLE_CHOICE
+      ? defaultValue?.files[0].content
+      : ""
+  );
+  const [fileName, setFileName] = useState<string>(
+    defaultValue?.type !== InteractionModuleType.MULTIPLE_CHOICE
+      ? defaultValue?.files[0].name
+      : ""
+  );
 
   const handleCreateInteractionModule = async ({ id }: { id: string }) => {
     const res = await InteractModuleAPI.createInteractionModule({

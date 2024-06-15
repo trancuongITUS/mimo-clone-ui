@@ -6,4 +6,9 @@ const createLesson = async (payload: Partial<TLesson>): Promise<TLesson> => {
   return res.data.data;
 };
 
-export const LessonAPI = { createLesson };
+const deleteLesson = async (id: string) => {
+  const res = await configuredAxios.delete("/lessons/" + id);
+  return res.data.data;
+};
+
+export const LessonAPI = { createLesson, deleteLesson };
