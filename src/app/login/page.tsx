@@ -62,9 +62,7 @@ export default function Login() {
         signInWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 const user = userCredential.user;
-                fetchUserInfo(user.uid).then((user) => {
-                    router.push("/suggest-courses");
-                });
+                router.push("/user-page");
             })
             .catch((error) => {
                 console.log("~ handleLogin ~ error:", error);
