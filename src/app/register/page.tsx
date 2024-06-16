@@ -15,6 +15,7 @@ export default function Register() {
     const [password, setPassword] = useState<string>("");
     const [emailError, setEmailError] = useState<string>("");
     const [pwdError, setPwdError] = useState<string>("");
+    const [agreed, setAgreed] = useState<boolean>(false);
     const router = useRouter();
 
     const validateEmail = (email: string) => {
@@ -120,7 +121,12 @@ export default function Register() {
                 />
                 <p className={styles.p_error}>{pwdError}</p>
                 <label className={styles.term}>
-                    <input type="checkbox" name="term" />
+                    <input
+                        type="checkbox"
+                        name="term"
+                        checked={agreed}
+                        onChange={(e) => setAgreed(e.target.checked)}
+                    />
                     <span className={styles.checkbox} />
                     <div className="ml-4">I agree to Mimo&apos;s</div>
                     <a href="https://mimo.org/terms">Terms of Service</a>
@@ -132,6 +138,8 @@ export default function Register() {
                 <button
                     className={`${styles.button} ${styles.login}`}
                     onClick={handleSignUp}
+                    disabled={!agreed}
+                    style={!agreed ? { cursor: "not-allowed" } : {}}
                 >
                     Sign up and learn for free
                 </button>
