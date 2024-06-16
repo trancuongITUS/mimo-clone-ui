@@ -6,6 +6,7 @@ import {
   PrePostInteractionModuleContentType,
   PrePostInteractionModuleType,
   PrePostInteractionModuleVisibleIf,
+  TPrePostInteractionModule,
 } from "@/utils/types";
 import Input from "@/components/styledComponents/Input";
 import Textarea from "@/components/styledComponents/TextArea";
@@ -16,13 +17,21 @@ import {
 import { EMIT_EVENT } from "@/utils/eventEmitter";
 import { PrePostInteractionModuleAPI } from "@/api/prePostInteractionModule";
 
-const PostInteractModule = () => {
+type Props = {
+  defaultPostInteract: TPrePostInteractionModule[];
+};
+
+const PostInteractModule = ({ defaultPostInteract }: Props) => {
   const [type, setType] = useState<PrePostInteractionModuleVisibleIf>(
-    PrePostInteractionModuleVisibleIf.ALWAYS
+    defaultPostInteract?.[0]?.visibleIf ??
+      PrePostInteractionModuleVisibleIf.ALWAYS
   );
-  const [paragraphContent, setParagraphContent] = useState<string>("");
+  const [paragraphContent, setParagraphContent] = useState<string>(
+    defaultPostInteract?.[0]?.content ?? ""
+  );
 
   const handleCreatePostInteractionModule = async ({ id }: { id: string }) => {
+    if (!paragraphContent.length) return;
     await PrePostInteractionModuleAPI.createPrePostInteractionModules({
       lessonId: id,
       type: PrePostInteractionModuleType.POST,

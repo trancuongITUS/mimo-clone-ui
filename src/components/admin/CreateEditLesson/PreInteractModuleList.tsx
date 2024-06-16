@@ -1,6 +1,7 @@
 import {
   PrePostInteractionModuleContentType,
   SupportedCodeLanguage,
+  TPrePostInteractionModule,
 } from "@/utils/types";
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
@@ -26,10 +27,45 @@ const generateNewPreInteractionModuleInput = (): PreInteractionModuleInput => ({
   codeContent: "",
 });
 
-const PreInteractModuleList = () => {
-  const [listModule, setListModule] = useState<PreInteractionModuleInput[]>([
-    generateNewPreInteractionModuleInput(),
-  ]);
+type Props = {
+  defaultPreInteractModule?: TPrePostInteractionModule[];
+};
+
+const prePostInteractionModuleToPreInteractionModuleInput = (
+  input: TPrePostInteractionModule
+): PreInteractionModuleInput => {
+  if (input.contentType === PrePostInteractionModuleContentType.PARAGRAPH) {
+    return {
+      id: input.id,
+      contentType: PrePostInteractionModuleContentType.PARAGRAPH,
+      paragraphContent: input.content,
+      codeFileName: "",
+      codeContent: "",
+      codeLanguage: SupportedCodeLanguage.PYTHON,
+    };
+  } else if (
+    input.contentType === PrePostInteractionModuleContentType.CODE_NONE
+  ) {
+    return {
+      id: input.id,
+      contentType: PrePostInteractionModuleContentType.CODE_NONE,
+      paragraphContent: "",
+      codeFileName: input.files[0].name,
+      codeContent: input.files[0].content,
+      codeLanguage: input.files[0].codeLanguage,
+    };
+  }
+};
+const PreInteractModuleList = ({ defaultPreInteractModule }: Props) => {
+  const [listModule, setListModule] = useState<PreInteractionModuleInput[]>(
+    defaultPreInteractModule
+      ? defaultPreInteractModule
+          .map((item) =>
+            prePostInteractionModuleToPreInteractionModuleInput(item)
+          )
+          .filter((item) => item)
+      : [generateNewPreInteractionModuleInput()]
+  );
 
   return (
     <>

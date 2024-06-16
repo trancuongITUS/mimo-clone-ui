@@ -19,24 +19,36 @@ const CreateCourses = () => {
     useState<boolean>(false);
   const [openingCoursePath, setOpeningCoursePath] = useState<TCourse>(null);
 
+  const fetchAllCoursesPath = async () => {
+    const res = await CoursesAPI.getAllCourses();
+    setAllCourses(res);
+  };
+
   useEffect(() => {
-    const fetchAllCoursesPath = async () => {
-      const res = await CoursesAPI.getAllCourses();
-      setAllCourses(res);
-    };
     fetchAllCoursesPath();
   }, []);
 
   const handleCreateCourse = async ({ name, description }) => {
     try {
-      const data = await CoursesAPI.createCourse({
-        name,
-        description,
-        isPublished: false,
-        iconUrl: "",
-      });
-      setAllCourses((prev) => [...prev, data]);
-      toast.success("Create course success");
+      if (openingCoursePath) {
+        await CoursesAPI.updateCourse(openingCoursePath.id, {
+          name,
+          description,
+          isPublished: false,
+          iconUrl: "",
+        });
+      } else {
+        await CoursesAPI.createCourse({
+          name,
+          description,
+          isPublished: false,
+          iconUrl: "",
+        });
+        toast.success("Create course success");
+      }
+      setTimeout(async () => {
+        await fetchAllCoursesPath();
+      }, 300);
     } catch (err) {
       toast.error("Create course fail ! ");
     } finally {

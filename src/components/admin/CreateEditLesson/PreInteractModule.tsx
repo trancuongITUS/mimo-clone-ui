@@ -50,6 +50,7 @@ const PreInteractionModule = ({ defaultModule }: Props) => {
           visibleIf: PrePostInteractionModuleVisibleIf.ALWAYS,
           type: PrePostInteractionModuleType.PRE,
           lessonId: id,
+          contentType,
         });
         break;
       case PrePostInteractionModuleContentType.CODE_NONE:
@@ -60,6 +61,7 @@ const PreInteractionModule = ({ defaultModule }: Props) => {
             visibleIf: PrePostInteractionModuleVisibleIf.ALWAYS,
             type: PrePostInteractionModuleType.PRE,
             lessonId: id,
+            contentType,
           });
         await FileAPI.createFile({
           preInteractionModuleId: res.id,

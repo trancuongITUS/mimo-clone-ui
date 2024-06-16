@@ -22,26 +22,40 @@ const CreateCourse = () => {
     useState<boolean>(false);
   const [openingCourse, setOpeningCourse] = useState<TSection>(null);
 
-  useEffect(() => {
-    const fetchSectionByCourseId = async (courseId: string) => {
-      const res = await SectionAPI.getSectionsByCourseID(courseId);
-      setSections(res);
-    };
+  const fetchSectionByCourseId = async (courseId: string) => {
+    const res = await SectionAPI.getSectionsByCourseID(courseId);
+    setSections(res);
+  };
 
+  useEffect(() => {
     if (courseId) fetchSectionByCourseId(courseId);
   }, [courseId]);
 
   const handleCreateSection = async ({ name, description }) => {
     try {
-      const data = await SectionAPI.createSection({
-        name,
-        description,
-        isLocked: true,
-        index: sections.length,
-        courseId,
-      });
-      setSections((prev) => [...prev, data]);
-      toast.success("Create section success");
+      if (openingCourse) {
+        await SectionAPI.updateSection(openingCourse.id, {
+          name,
+          description,
+          isLocked: true,
+          index: sections.length,
+          courseId,
+        });
+        toast.success("Update section success");
+      } else {
+        await SectionAPI.createSection({
+          name,
+          description,
+          isLocked: true,
+          index: sections.length,
+          courseId,
+        });
+        toast.success("Create section success");
+      }
+
+      setTimeout(async () => {
+        await fetchSectionByCourseId(courseId);
+      }, 300);
     } catch (err) {
       toast.error("Create section fail ! ");
     } finally {

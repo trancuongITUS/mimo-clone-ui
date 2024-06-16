@@ -25,9 +25,9 @@ const CreateCoursesPathModal = ({
   return (
     <Modal
       open={isOpen}
-      title={"Create Courses"}
+      title={defaultPath ? "Update Course" : "Create Courses"}
       onCancel={onClose}
-      okText={"Create"}
+      okText={defaultPath ? "Save" : "Create"}
       okButtonProps={{ style: { backgroundColor: "#885bde" } }}
       onOk={() => onOk({ name, description })}
     >

@@ -5,20 +5,8 @@ import Button from "@/components/styledComponents/Button";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import CreateTutorialModal, { CodeLanguageOption } from "./CreateTutorialModal";
-import {
-  Breadcrumb,
-  Collapse,
-  Button as AntdButton,
-  Space,
-  Tag,
-  Tooltip,
-} from "antd";
-import {
-  SupportedCodeLanguage,
-  TSection,
-  TTutorial,
-  TutorialType,
-} from "@/utils/types";
+import { Collapse, Button as AntdButton, Space, Tooltip } from "antd";
+import { SupportedCodeLanguage, TTutorial } from "@/utils/types";
 import DriveFileMoveOutlinedIcon from "@mui/icons-material/DriveFileMoveOutlined";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import Link from "next/link";
@@ -50,11 +38,12 @@ const Sections = () => {
   const [openingSection, setOpeningSection] = useState<TTutorial>(null);
   const [tutorials, setTutorials] = useState<TTutorial[]>([]);
 
+  const fetchTutorials = async (sectionId) => {
+    const data = await TutorialAPI.getTutorialsBySectionId(sectionId);
+    setTutorials(data);
+  };
+
   useEffect(() => {
-    const fetchTutorials = async (sectionId) => {
-      const data = await TutorialAPI.getTutorialsBySectionId(sectionId);
-      setTutorials(data);
-    };
     fetchTutorials(sectionId);
   }, [sectionId]);
 
@@ -65,17 +54,33 @@ const Sections = () => {
     codeLanguage,
   }) => {
     try {
-      const data = await TutorialAPI.createTutorial({
-        bannerIconUrl: "",
-        codeLanguage,
-        title,
-        descriptionContent,
-        type,
-        sectionId,
-        index: tutorials.length,
-      });
-      setTutorials((prev) => [...prev, data]);
-      toast.success("Create tutorial success");
+      if (openingSection) {
+        await TutorialAPI.updateTutorial(openingSection.id, {
+          ...openingSection,
+          bannerIconUrl: "",
+          codeLanguage,
+          title,
+          descriptionContent,
+          type,
+          sectionId,
+        });
+        toast.success("Update tutorial success");
+      } else {
+        await TutorialAPI.createTutorial({
+          bannerIconUrl: "",
+          codeLanguage,
+          title,
+          descriptionContent,
+          type,
+          sectionId,
+          index: tutorials.length,
+        });
+        toast.success("Create tutorial success");
+      }
+
+      setTimeout(async () => {
+        await fetchTutorials(sectionId);
+      }, 300);
     } catch (err) {
       toast.error("Create tutorial fail ! ");
     } finally {
@@ -140,7 +145,7 @@ const Sections = () => {
                   ),
                   extra: (
                     <Space>
-                      <Tooltip title={"View courses"}>
+                      <Tooltip title={"View chapter"}>
                         <Link href={`./tutorial/${item.id}/chapter`}>
                           <AntdButton
                             type="text"

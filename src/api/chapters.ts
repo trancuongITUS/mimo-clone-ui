@@ -18,8 +18,17 @@ const createChapter = async (payload: Partial<TChapter>): Promise<TChapter> => {
   return res.data.data;
 };
 
+const updateChapter = async (
+  id: string,
+  payload: Partial<TChapter>
+): Promise<TChapter> => {
+  const res = await configuredAxios.put("/chapters/" + id, payload);
+  return res.data.data;
+};
+
 export const ChapterAPI = {
   getChaptersByTutorialId,
   getChaptersById,
   createChapter,
+  updateChapter,
 };

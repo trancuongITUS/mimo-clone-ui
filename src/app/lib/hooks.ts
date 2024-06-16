@@ -34,11 +34,11 @@ export const useProtectedAdminRoute = () => {
       if (!user) {
         localStorage.removeItem(AUTH_TOKEN_LOCAL_STORAGE_KEY);
         // User is not authenticated, redirect to '/login'
-        router.push("admin/login");
+        router.push("/admin/login");
       } else {
         fetchUserInfo(user.uid).then((user) => {
           if (user?.role !== UserRole.ADMIN) {
-            router.push("admin/login");
+            router.push("/admin/login");
           }
         });
         user.getIdToken().then((token) => {

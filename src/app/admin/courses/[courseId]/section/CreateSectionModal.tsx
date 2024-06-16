@@ -25,9 +25,9 @@ const CreateCoursesModal = ({
   return (
     <Modal
       open={isOpen}
-      title={"Create New Section"}
+      title={defaultCourse ? "Update Section" : "Create New Section"}
       onCancel={onClose}
-      okText={"Create"}
+      okText={defaultCourse ? "Save" : "Create"}
       okButtonProps={{ style: { backgroundColor: "#885bde" } }}
       onOk={() => onOk({ name, description })}
     >

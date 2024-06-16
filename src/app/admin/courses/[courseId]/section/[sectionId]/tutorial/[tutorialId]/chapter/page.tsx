@@ -31,25 +31,38 @@ const Lessons = () => {
   const [chapters, setChapters] = useState<TChapter[]>([]);
   const [openingChapter, setOpeningChapter] = useState<TChapter>(null);
 
-  useEffect(() => {
-    const fetchChapters = async () => {
-      const res = await ChapterAPI.getChaptersByTutorialId(tutorialId);
-      setChapters(res);
-    };
+  const fetchChapters = async () => {
+    const res = await ChapterAPI.getChaptersByTutorialId(tutorialId);
+    setChapters(res);
+  };
 
+  useEffect(() => {
     fetchChapters();
   }, []);
 
   const handleCreateSection = async ({ title }) => {
     try {
-      const data = await ChapterAPI.createChapter({
-        title,
-        index: chapters.length,
-        lessons: [],
-        tutorialId,
-      });
-      setChapters((prev) => [...prev, data]);
-      toast.success("Create section success");
+      if (openingChapter) {
+        await ChapterAPI.updateChapter(openingChapter.id, {
+          ...openingChapter,
+          title,
+          lessons: [],
+          tutorialId,
+        });
+        toast.success("Update section success");
+      } else {
+        await ChapterAPI.createChapter({
+          title,
+          index: chapters.length,
+          lessons: [],
+          tutorialId,
+        });
+        toast.success("Create section success");
+      }
+
+      setTimeout(async () => {
+        await fetchChapters();
+      }, 300);
     } catch (err) {
       toast.error("Create section fail ! ");
     } finally {
@@ -139,8 +152,12 @@ const Lessons = () => {
       {openCreateCourseModal && (
         <CreateChapterModal
           isOpen={openCreateCourseModal}
-          onClose={() => setOpenCreateCourseModal(false)}
+          onClose={() => {
+            setOpenCreateCourseModal(false);
+            setOpeningChapter(null);
+          }}
           onOk={handleCreateSection}
+          defaultValue={openingChapter}
         />
       )}
     </>
