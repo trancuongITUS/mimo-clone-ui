@@ -88,7 +88,7 @@ export default function Home() {
                       <br />
                       Build a portfolio.
                       <br />
-                      Get hired.
+                      Get hired Oke.
                     </h3>
                     <div className="w-full space-y-3 tabletLg:block">
                       <div className="tabletLg:block">
