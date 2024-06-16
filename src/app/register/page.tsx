@@ -58,7 +58,7 @@ export default function Register() {
         createUserWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 const user = userCredential.user;
-                router.push("/login");
+                router.push("/suggest-courses");
             })
             .catch((error) => {
                 console.log("~ handleLogin ~ error:", error);
