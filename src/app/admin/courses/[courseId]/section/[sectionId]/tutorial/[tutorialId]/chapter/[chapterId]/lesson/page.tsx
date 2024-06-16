@@ -7,11 +7,9 @@ import { Layout } from "@/components/admin/layout";
 import Button from "@/components/styledComponents/Button";
 import { LessonType, TLesson } from "@/utils/types";
 import { Collapse, Space, Tooltip, Button as AntdButton } from "antd";
-import Link from "next/link";
 import { useParams } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
-import DriveFileMoveOutlinedIcon from "@mui/icons-material/DriveFileMoveOutlined";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import CreateLessonModal from "./CreateLessonModal";
 import { LessonAPI } from "@/api/lesson";
@@ -55,7 +53,10 @@ const Lesson = () => {
       setEditingLesson(null);
       setOpenCreateEditModal(false);
       eventEmitter.emit(EMIT_EVENT.CREATE_LESSON, { id: res.id });
-      fetchLesson(chapterId);
+
+      setTimeout(async () => {
+        await fetchLesson(chapterId);
+      }, 800);
     } catch (err) {
       console.log("🚀 ~ handleCreateLesson ~ err:", err);
     }
@@ -106,16 +107,6 @@ const Lesson = () => {
                   ),
                   extra: (
                     <Space>
-                      <Tooltip title={"View lesson"}>
-                        <Link href={`./chapter/${item.id}/lesson`}>
-                          <AntdButton
-                            type="text"
-                            icon={
-                              <DriveFileMoveOutlinedIcon fontSize="small" />
-                            }
-                          ></AntdButton>
-                        </Link>
-                      </Tooltip>
                       <Tooltip title={"Edit lesson"}>
                         <AntdButton
                           type="text"

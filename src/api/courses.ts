@@ -12,7 +12,16 @@ const createCourse = async (payload: Partial<TCourse>): Promise<TCourse> => {
   return res.data.data;
 };
 
+const updateCourse = async (
+  id: string,
+  payload: Partial<TCourse>
+): Promise<TCourse> => {
+  const res = await configuredAxios.put("/courses/" + id, payload);
+  return res.data.data;
+};
+
 export const CoursesAPI = {
   getAllCourses,
   createCourse,
+  updateCourse,
 };

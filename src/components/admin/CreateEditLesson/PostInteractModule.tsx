@@ -31,6 +31,7 @@ const PostInteractModule = ({ defaultPostInteract }: Props) => {
   );
 
   const handleCreatePostInteractionModule = async ({ id }: { id: string }) => {
+    if (!paragraphContent.length) return;
     await PrePostInteractionModuleAPI.createPrePostInteractionModules({
       lessonId: id,
       type: PrePostInteractionModuleType.POST,

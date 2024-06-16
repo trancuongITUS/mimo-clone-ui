@@ -1,4 +1,4 @@
-import { Button, Divider, Select, Space } from "antd";
+import { Button, Divider, Select, Space, Tooltip } from "antd";
 import { useEffect, useState } from "react";
 import styles from "./index.module.css";
 import {
@@ -24,6 +24,7 @@ import InputContentMultipleChoice, {
 import { v4 as uuidv4 } from "uuid";
 import AddCircleOutlineRoundedIcon from "@mui/icons-material/AddCircleOutlineRounded";
 import { ItemsAPI } from "@/api/items";
+import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 
 function extractInteractionOptions(
   text: string
@@ -106,9 +107,11 @@ const InteractModule = ({ defaultValue }: Props) => {
   );
 
   const handleCreateInteractionModule = async ({ id }: { id: string }) => {
+    if (!multipleChoiceContentList.filter((item) => item.content.length).length)
+      return;
     const res = await InteractModuleAPI.createInteractionModule({
       isCode: false,
-      type: InteractionModuleType.MULTIPLE_CHOICE,
+      type,
       lessonId: id,
     });
 
@@ -234,7 +237,17 @@ const InteractModule = ({ defaultValue }: Props) => {
             />
           </div>
           <div>
-            <p className="text-[0.9rem] leading-7">Content</p>
+            <Space>
+              <p className="text-[0.9rem] leading-7">Content</p>
+              <Tooltip
+                title={
+                  'Write with markdown format and place the code input in to """'
+                }
+                trigger={["hover"]}
+              >
+                <InfoOutlinedIcon fontSize="small"></InfoOutlinedIcon>
+              </Tooltip>
+            </Space>
             <Textarea
               title="Content"
               rows={3}

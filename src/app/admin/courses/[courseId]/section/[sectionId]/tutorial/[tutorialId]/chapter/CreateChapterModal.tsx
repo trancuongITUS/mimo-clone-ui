@@ -1,5 +1,6 @@
 import Input from "@/components/styledComponents/Input";
 import Textarea from "@/components/styledComponents/TextArea";
+import { TChapter } from "@/utils/types";
 import { Modal } from "antd";
 import { useState } from "react";
 
@@ -7,16 +8,17 @@ type Props = {
   isOpen: boolean;
   onClose: () => void;
   onOk: (payload: { title: string }) => Promise<void>;
+  defaultValue?: TChapter;
 };
 
-const CreateLessonModal = ({ isOpen, onClose, onOk }: Props) => {
-  const [title, setTitle] = useState<string>("");
+const CreateLessonModal = ({ isOpen, onClose, onOk, defaultValue }: Props) => {
+  const [title, setTitle] = useState<string>(defaultValue?.title);
   return (
     <Modal
       open={isOpen}
-      title={"Create chapter"}
+      title={defaultValue ? "Update chapter" : "Create chapter"}
       onCancel={onClose}
-      okText={"Create"}
+      okText={defaultValue ? "Save" : "Create"}
       okButtonProps={{ style: { backgroundColor: "#885bde" } }}
       onOk={() => onOk({ title })}
     >

@@ -100,9 +100,9 @@ const CreateSectionModal = ({
   return (
     <Modal
       open={isOpen}
-      title={"Create New Tutorial"}
+      title={defaultSection ? "Update Tutorial" : "Create New Tutorial"}
       onCancel={onClose}
-      okText={"Create"}
+      okText={defaultSection ? "Save" : "Create"}
       okButtonProps={{ style: { backgroundColor: "#885bde" } }}
       onOk={() =>
         onOk({

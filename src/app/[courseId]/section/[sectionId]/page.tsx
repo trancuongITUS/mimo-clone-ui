@@ -64,14 +64,14 @@ export default function SectionPage() {
     if (currentSection?.index < currentTraceSection)
       return FinishStatus.FINISHED;
 
-    if (currentSection?.index > currentTraceSection) return FinishStatus.BLOCKING;
+    if (currentSection?.index > currentTraceSection) return FinishStatus.DOING;
     const currentTraceTutorial =
       Number(traceCoursesData?.key.split("-")[1]) || 0;
 
     if (tutorial.index < currentTraceTutorial) return FinishStatus.FINISHED;
 
     if (tutorial.index === currentTraceTutorial) return FinishStatus.DOING;
-    else return FinishStatus.BLOCKING;
+    else return FinishStatus.DOING;
   };
 
   return (
